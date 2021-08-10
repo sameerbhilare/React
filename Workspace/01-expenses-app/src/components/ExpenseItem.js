@@ -1,3 +1,7 @@
+// below import of 'React' is optional in latest versions of React.
+// It is used under the hood when we use JSX code
+import React from 'react';
+
 import Card from './Card';
 import ExpenseDate from './ExpenseDate';
 // make the React nuild process aware that this .css should be used for this component
@@ -9,7 +13,7 @@ import './ExpenseItem.css';
    You can name it anything, but typically it is named as 'props'
 */
 function ExpenseItem(props) {
-  // JSX - must return JSX code with only one root element.
+  // JSX - must return JSX code with only one root element. (bcz React.createElement() expects only one element)
   // Inside of that root element, we can have many adjacent elements
   return (
     <Card className='expense-item'>

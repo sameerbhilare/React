@@ -1,3 +1,7 @@
+// below import of 'React' is optional in latest versions of React.
+// It is used under the hood when we use JSX code
+import React from 'react';
+
 import './ExpenseDate.css';
 
 // A component in React is just a JavaScript function

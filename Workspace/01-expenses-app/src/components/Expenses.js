@@ -1,3 +1,7 @@
+// below import of 'React' is optional in latest versions of React.
+// It is used under the hood when we use JSX code
+import React from 'react';
+
 import Card from './Card';
 import ExpenseItem from './ExpenseItem';
 // make the React nuild process aware that this .css should be used for this component

@@ -1,3 +1,7 @@
+// below import of 'React' is optional in latest versions of React.
+// It is used under the hood when we use JSX code
+import React from 'react';
+
 import Expenses from './components/Expenses';
 
 function App() {
@@ -30,6 +34,15 @@ function App() {
       <Expenses items={expenses} />
     </div>
   );
+
+  // Under the hood, above code is transformed into below which is then transformed to browser understandable code
+  /*
+  return React.createElement(
+    'div',
+    {},
+    React.createElement('h2', {}, "Let's get started!"),
+    React.createElement(Expenses, { items: expenses })
+  );*/
 }
 
 export default App;
