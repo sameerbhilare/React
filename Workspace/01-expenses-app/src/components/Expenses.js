@@ -1,3 +1,4 @@
+import Card from './Card';
 import ExpenseItem from './ExpenseItem';
 // make the React nuild process aware that this .css should be used for this component
 import './Expenses.css';
@@ -10,7 +11,7 @@ import './Expenses.css';
 function Expenses(props) {
   // JSX (JavaScript XML)
   return (
-    <div className='expenses'>
+    <Card className='expenses'>
       <ExpenseItem
         title={props.items[0].title}
         amount={props.items[0].amount}
@@ -31,7 +32,7 @@ function Expenses(props) {
         amount={props.items[3].amount}
         date={props.items[3].date}
       ></ExpenseItem>
-    </div>
+    </Card>
   );
 }
 
