@@ -12,7 +12,7 @@ import './Expenses.css';
    with key as the name of the attribute and value as its value.
    You can name it anything, but typically it is named as 'props'
 */
-function Expenses(props) {
+const Expenses = (props) => {
   // JSX (JavaScript XML)
   return (
     <Card className='expenses'>
@@ -38,6 +38,6 @@ function Expenses(props) {
       ></ExpenseItem>
     </Card>
   );
-}
+};
 
 export default Expenses;

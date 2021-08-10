@@ -12,7 +12,7 @@ import './ExpenseItem.css';
    with key as the name of the attribute and value as its value.
    You can name it anything, but typically it is named as 'props'
 */
-function ExpenseItem(props) {
+const ExpenseItem = (props) => {
   // JSX - must return JSX code with only one root element. (bcz React.createElement() expects only one element)
   // Inside of that root element, we can have many adjacent elements
   return (
@@ -25,6 +25,6 @@ function ExpenseItem(props) {
       </div>
     </Card>
   );
-}
+};
 
 export default ExpenseItem;

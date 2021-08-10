@@ -9,7 +9,7 @@ import './ExpenseDate.css';
    with key as the name of the attribute and value as its value.
    You can name it anything, but typically it is named as 'props'
 */
-function ExpenseDate(props) {
+const ExpenseDate = (props) => {
   const month = props.date.toLocaleString('en-US', { month: 'long' });
   const day = props.date.toLocaleString('en-US', { day: '2-digit' });
   const year = props.date.getFullYear();
@@ -21,6 +21,6 @@ function ExpenseDate(props) {
       <div className='expense-date__day'>{day}</div>
     </div>
   );
-}
+};
 
 export default ExpenseDate;
