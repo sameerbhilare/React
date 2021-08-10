@@ -2,7 +2,7 @@
 // It is used under the hood when we use JSX code
 import React from 'react';
 
-import Card from './Card';
+import Card from '../UI/Card';
 import ExpenseItem from './ExpenseItem';
 // make the React nuild process aware that this .css should be used for this component
 import './Expenses.css';
