@@ -1,5 +1,5 @@
-// make the React nuild process aware that this .css should be used for this component
 import ExpenseDate from './ExpenseDate';
+// make the React nuild process aware that this .css should be used for this component
 import './ExpenseItem.css';
 
 // A component in React is just a JavaScript function
