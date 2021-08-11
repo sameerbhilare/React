@@ -11,10 +11,18 @@ import './NewExpense.css';
    with key as the name of the attribute and value as its value.
    You can name it anything, but typically it is named as 'props'
 */
-const NewExpense = () => {
+const NewExpense = (props) => {
+  const saveExpenseDataHandler = (enteredExpenseData) => {
+    const expenseData = { ...enteredExpenseData, id: Math.random().toString() };
+    console.log('NewExpense', expenseData);
+
+    // call the event handler (communicate to parent)
+    props.onAddExpense(expenseData);
+  };
+
   return (
     <div className='new-expense'>
-      <ExpenseForm />
+      <ExpenseForm onSaveExpenseData={saveExpenseDataHandler} />
     </div>
   );
 };

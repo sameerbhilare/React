@@ -10,7 +10,7 @@ import './ExpenseForm.css';
    with key as the name of the attribute and value as its value.
    You can name it anything, but typically it is named as 'props'
 */
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   // Multiple States are managed independantly
   // no matter how many times this component function gets called for once instance of a component, the state will not be reset due to useState()
   const [enteredTitle, setEnteredTitle] = useState(''); // initial state
@@ -90,7 +90,8 @@ const ExpenseForm = () => {
       date: new Date(enteredDate),
     };
 
-    console.log(expenseData);
+    // call the event handler (communicate to parent)
+    props.onSaveExpenseData(expenseData);
 
     // reset form
     setEnteredTitle('');
