@@ -11,12 +11,17 @@ import './ExpenseForm.css';
    You can name it anything, but typically it is named as 'props'
 */
 const ExpenseForm = () => {
+  // handler
+  const titleChangeHandler = (event) => {
+    console.log(event.target.value);
+  };
+
   return (
     <form>
       <div className='new-expense__controls'>
         <div className='new-expense__control'>
           <label>Title</label>
-          <input type='text' />
+          <input type='text' onChange={titleChangeHandler} />
         </div>
         <div className='new-expense__control'>
           <label>Amount</label>
