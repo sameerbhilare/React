@@ -13,19 +13,38 @@ import './ExpenseForm.css';
 const ExpenseForm = () => {
   // Multiple States are managed independantly
   // no matter how many times this component function gets called for once instance of a component, the state will not be reset due to useState()
-  const [enteredTitle, setEnteredTitle] = useState(''); // initial state
-  const [amount, setAmount] = useState(''); // initial state
-  const [date, setDate] = useState(''); // initial state
+  //   const [enteredTitle, setEnteredTitle] = useState(''); // initial state
+  //   const [enteredAmount, setEnteredAmount] = useState(''); // initial state
+  //   const [enteredDate, setEnteredDate] = useState(''); // initial state
+
+  // one state vs multiple states
+  const [userInput, setUserInput] = useState({
+    enteredTitle: '',
+    enteredAmount: '',
+    enteredDate: '',
+  });
 
   // handler
   const titleChangeHandler = (event) => {
-    setEnteredTitle(event.target.value);
+    //setEnteredTitle(event.target.value);
+    setUserInput({
+      ...userInput,
+      enteredTitle: event.target.value,
+    });
   };
   const amountChangeHandler = (event) => {
-    setAmount(event.target.value);
+    //setEnteredAmount(event.target.value);
+    setUserInput({
+      ...userInput,
+      enteredAmount: event.target.value,
+    });
   };
   const dateChangeHandler = (event) => {
-    setDate(event.target.value);
+    //setEnteredDate(event.target.value);
+    setUserInput({
+      ...userInput,
+      enteredDate: event.target.value,
+    });
   };
 
   return (
