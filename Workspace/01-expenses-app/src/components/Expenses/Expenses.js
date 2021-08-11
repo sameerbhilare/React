@@ -35,7 +35,16 @@ const Expenses = (props) => {
         <ExpensesFilter selected={filterYear} onFilterChange={filterChangeHandler} />
         {/* using plain Array map() method to render our components */}
         {props.items.map((expense) => (
-          <ExpenseItem title={expense.title} amount={expense.amount} date={expense.date} />
+          /*If you add the 'key' to your component or HTML element with unique value,
+            then you can help React identify the individual items.
+            So that React will efficiently perform the rendering and DOM manipulations
+            and it will also avoid potential 'state' as well as rendering performance issues in below components */
+          <ExpenseItem
+            key={expense.id}
+            title={expense.title}
+            amount={expense.amount}
+            date={expense.date}
+          />
         ))}
       </Card>
     </div>
