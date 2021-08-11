@@ -13,6 +13,12 @@ import ExpensesFilter from './ExpensesFilter';
    with key as the name of the attribute and value as its value.
    You can name it anything, but typically it is named as 'props'
 */
+/*
+  *************************************** IMP ***************************************
+  This component is a "stateful" component also called "smart" component 
+  because it has some internal state. e.g. 'filterYear'
+  ***********************************************************************************
+*/
 const Expenses = (props) => {
   // storing the state so that we can pass to othe components
   const [filterYear, setFilterYear] = useState('2021');

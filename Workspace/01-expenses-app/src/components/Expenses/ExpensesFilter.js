@@ -2,6 +2,16 @@ import React from 'react';
 
 import './ExpensesFilter.css';
 
+/*
+    *************************************** IMP ***************************************
+    ExpensesFilter is a "Controlled component" which simply means that 
+    both the value, as well as changes to the value are not handled in the component itself but in a parent component.
+    So here the dropdown receives value from parent component (Expenses.js) 
+    and passed user selected value (onChange) to the parent component (Expenses.js )
+
+    So Expenses.js component 'controls' ExpensesFilter component.
+    ***********************************************************************************
+*/
 const ExpensesFilter = (props) => {
   const dropdownChangeHandler = (event) => {
     props.onFilterChange(event.target.value);

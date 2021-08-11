@@ -1,5 +1,9 @@
 // below import of 'React' is optional in latest versions of React.
 // It is used under the hood when we use JSX code
+/* 'useState' function allows us to define values as state
+    where changes to these values should reflect in the component function being called again
+   'useState' is a React Hook. React Hooks start with the word "use" in their name, 
+    and all these hooks must only be called DIRECTLY inside of React component functions. (not inside nested function of component function) */
 import React, { useState } from 'react';
 
 // make the React nuild process aware that this .css should be used for this component
@@ -11,6 +15,9 @@ import './ExpenseForm.css';
    You can name it anything, but typically it is named as 'props'
 */
 const ExpenseForm = (props) => {
+  // invoking react hook
+  // useState always returns an array of exactly 2 elements.
+  // Name of the 'state' and a function to change value of that property
   // Multiple States are managed independantly
   // no matter how many times this component function gets called for once instance of a component, the state will not be reset due to useState()
   const [enteredTitle, setEnteredTitle] = useState(''); // initial state
@@ -27,7 +34,11 @@ const ExpenseForm = (props) => {
 
   // handler
   const titleChangeHandler = (event) => {
+    // we cannot use enteredTitle = event.target.value, we haveto use setTitle function because
+    // calling setEnteredTitle() will not only update value of 'title' BUT ALSO it will execute this component function again!
     setEnteredTitle(event.target.value);
+    // IMP - At this point, the updated title will NOT be available bcz setTitle will 'schedule' the update, but eventually it will get updated.
+    //console.log(title);
 
     // one state for 3 inputs
     // below is not correct way because we depend on prevous State.
