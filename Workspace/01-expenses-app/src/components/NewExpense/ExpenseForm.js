@@ -27,23 +27,47 @@ const ExpenseForm = () => {
   // handler
   const titleChangeHandler = (event) => {
     //setEnteredTitle(event.target.value);
+
+    // one state for 3 inputs
+    // below is not correct way because we depend on prevous State.
+    /*
     setUserInput({
-      ...userInput,
+      ...userInput, // prev state
       enteredTitle: event.target.value,
+    });*/
+    // better way when we depend on previous State is to use inner function for which React passes LATEST previous State
+    setUserInput((prevState) => {
+      return { ...prevState, enteredTitle: event.target.value };
     });
   };
   const amountChangeHandler = (event) => {
     //setEnteredAmount(event.target.value);
+
+    // one state for 3 inputs
+    // below is not correct way because we depend on prevous State.
+    /*
     setUserInput({
-      ...userInput,
+      ...userInput, // prev state
       enteredAmount: event.target.value,
+    });*/
+    // better way when we depend on previous State is to use inner function for which React passes LATEST previous State
+    setUserInput((prevState) => {
+      return { ...prevState, enteredAmount: event.target.value };
     });
   };
   const dateChangeHandler = (event) => {
     //setEnteredDate(event.target.value);
+
+    // one state for 3 inputs
+    // below is not correct way because we depend on prevous State.
+    /*
     setUserInput({
-      ...userInput,
+      ...userInput, // prev state
       enteredDate: event.target.value,
+    }); */
+    // better way when we depend on previous State is to use inner function for which React passes LATEST previous State
+    setUserInput((prevState) => {
+      return { ...prevState, enteredDate: event.target.value };
     });
   };
 
