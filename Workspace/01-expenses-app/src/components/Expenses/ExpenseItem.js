@@ -13,6 +13,11 @@ import './ExpenseItem.css';
    You can name it anything, but typically it is named as 'props'
 */
 const ExpenseItem = (props) => {
+  // button click handler
+  const clickHandler = () => {
+    console.log('clicked!');
+  };
+
   // JSX - must return JSX code with only one root element. (bcz React.createElement() expects only one element)
   // Inside of that root element, we can have many adjacent elements
   return (
@@ -22,6 +27,7 @@ const ExpenseItem = (props) => {
       <div className='expense-item__description'>
         <h2>{props.title}</h2>
         <div className='expense-item__price'>${props.amount}</div>
+        <button onClick={clickHandler}>Change Title</button>
       </div>
     </Card>
   );
