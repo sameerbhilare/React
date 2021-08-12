@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 
-import styled from 'styled-components';
+//import styled from 'styled-components';
 import Button from '../../UI/Button/Button';
-import './CourseInput.css';
+
+/*
+  This is basically a signal to the underlying React compilation process
+  to transform to code so that CSS Modules work.
+  The build process under the hood just takes those CSS classes and a CSS file
+  and basically changes those class names to be unique
+  so that those styles are 'scoped' to a component we import this file into.
+  We then access those CSS classes from the imported file as properties on the imported 'styles' object.
+*/
+import styles from './CourseInput.module.css';
 
 // another component
+/*
 const FormControl = styled.div`
   margin: 0.5rem 0;
 
@@ -31,6 +41,7 @@ const FormControl = styled.div`
     border-color: #8b005d;
   }
 `;
+*/
 
 const CourseInput = (props) => {
   const [enteredValue, setEnteredValue] = useState('');
@@ -54,13 +65,24 @@ const CourseInput = (props) => {
 
   return (
     <form onSubmit={formSubmitHandler}>
+      <div className={`${styles['form-control']} ${!isValid && styles.invalid}`}>
+        <label>Course Goal</label>
+        <input type='text' onChange={goalInputChangeHandler} />
+      </div>
+      <Button type='submit'>Add Goal</Button>
+    </form>
+  );
+
+  /* // using styled component
+  return (
+    <form onSubmit={formSubmitHandler}>
       <FormControl invalid={!isValid}>
         <label>Course Goal</label>
         <input type='text' onChange={goalInputChangeHandler} />
       </FormControl>
       <Button type='submit'>Add Goal</Button>
     </form>
-  );
+  ); */
 };
 
 export default CourseInput;

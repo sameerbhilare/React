@@ -9,7 +9,7 @@ import React from 'react';
   so that those styles are 'scoped' to a component we import this file into.
   We then access those CSS classes from the imported file as properties on the imported 'styles' object.
 */
-import styles from './Button.module.css';
+import styles from './Button.module.css'; // the name of the CSS Module file must end with '.module.css'
 
 //import './Button.css';
 
