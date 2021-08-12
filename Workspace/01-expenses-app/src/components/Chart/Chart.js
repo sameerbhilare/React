@@ -12,13 +12,17 @@ import ChartBar from './ChartBar';
    You can name it anything, but typically it is named as 'props'
 */
 const Chart = (props) => {
+  // convert dataPoint array to array of values/numbers only
+  const dataPointValues = props.dataPoints.map((dataPoint) => dataPoint.value);
+  const totalMax = Math.max(...dataPointValues);
+
   return (
     <div className='chart'>
       {props.dataPoints.map((dataPoint) => (
         <ChartBar
           key={dataPoint.label}
           value={dataPoint.value}
-          maxValue={null}
+          maxValue={totalMax}
           label={dataPoint.label}
         />
       ))}

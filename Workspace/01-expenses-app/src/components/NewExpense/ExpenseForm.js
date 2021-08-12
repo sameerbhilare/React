@@ -97,7 +97,7 @@ const ExpenseForm = (props) => {
     // combine State data
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
+      amount: +enteredAmount,
       date: new Date(enteredDate),
     };
 

@@ -3,7 +3,7 @@
 import React from 'react';
 
 // make the React nuild  aware that this .css should be used for this component
-import './Chart.css';
+import './ChartBar.css';
 
 // A component in React is just a JavaScript function
 /* React will pass a single object to our component function which will hold all passed-in parameters
@@ -13,8 +13,8 @@ import './Chart.css';
 const ChartBar = (props) => {
   let barFillHeight = '0%';
 
-  if (props.max > 0) {
-    barFillHeight = Math.round(props.value / props.max) * 100 + '%';
+  if (props.maxValue > 0) {
+    barFillHeight = Math.round((props.value / props.maxValue) * 100) + '%';
   }
 
   return (

@@ -7,6 +7,7 @@ import ExpensesFilter from './ExpensesFilter';
 import ExpensesList from './ExpensesList';
 // make the React nuild process aware that this .css should be used for this component
 import './Expenses.css';
+import ExpensesChart from './ExpensesChart';
 
 // A component in React is just a JavaScript function
 /* React will pass a single object to our component function which will hold all passed-in parameters
@@ -37,6 +38,7 @@ const Expenses = (props) => {
     <div>
       <Card className='expenses'>
         <ExpensesFilter selected={filterYear} onFilterChange={filterChangeHandler} />
+        <ExpensesChart expenses={filteredExpenses} />
         <ExpensesList items={filteredExpenses} />
       </Card>
     </div>
