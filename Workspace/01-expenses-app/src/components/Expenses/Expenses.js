@@ -28,15 +28,20 @@ const Expenses = (props) => {
     setFilterYear(filterYear);
   };
 
+  const filteredExpenses = props.items.filter(
+    (expense) => expense.date.getFullYear() === +filterYear
+  );
+
   // JSX (JavaScript XML)
   return (
     <div>
       <Card className='expenses'>
         <ExpensesFilter selected={filterYear} onFilterChange={filterChangeHandler} />
         {/* using plain Array map() method to render our components */}
-        {props.items
-          .filter((expense) => expense.date.getFullYear() === +filterYear)
-          .map((expense) => (
+        {filteredExpenses.length === 0 ? (
+          <p>No expenses found!</p>
+        ) : (
+          filteredExpenses.map((expense) => (
             /*If you add the 'key' to your component or HTML element with unique value,
             then you can help React identify the individual items.
             So that React will efficiently perform the rendering and DOM manipulations
@@ -47,7 +52,8 @@ const Expenses = (props) => {
               amount={expense.amount}
               date={expense.date}
             />
-          ))}
+          ))
+        )}
       </Card>
     </div>
   );
