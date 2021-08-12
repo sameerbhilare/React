@@ -11,6 +11,15 @@ const AddUser = (props) => {
   const addUserHandler = (event) => {
     event.preventDefault();
 
+    if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
+      return;
+    }
+
+    // convert to number
+    if (+enteredAge < 1) {
+      return;
+    }
+
     console.log({ username: enteredUsername, age: enteredAge });
 
     // reset the form
