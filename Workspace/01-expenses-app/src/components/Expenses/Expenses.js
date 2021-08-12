@@ -32,27 +32,28 @@ const Expenses = (props) => {
     (expense) => expense.date.getFullYear() === +filterYear
   );
 
+  let expensesContent = <p>No expenses found!</p>;
+  if (filteredExpenses.length > 0) {
+    expensesContent = filteredExpenses.map((expense) => (
+      /*If you add the 'key' to your component or HTML element with unique value,
+      then you can help React identify the individual items.
+      So that React will efficiently perform the rendering and DOM manipulations
+      and it will also avoid potential 'state' as well as rendering performance issues in below components */
+      <ExpenseItem
+        key={expense.id}
+        title={expense.title}
+        amount={expense.amount}
+        date={expense.date}
+      />
+    ));
+  }
+
   // JSX (JavaScript XML)
   return (
     <div>
       <Card className='expenses'>
         <ExpensesFilter selected={filterYear} onFilterChange={filterChangeHandler} />
-        {/* TRICK: && returns second expression when first expression is true */}
-        {filteredExpenses.length === 0 && <p>No expenses found!</p>}
-        {/* using plain Array map() method to render our components */}
-        {filteredExpenses.length > 0 &&
-          filteredExpenses.map((expense) => (
-            /*If you add the 'key' to your component or HTML element with unique value,
-            then you can help React identify the individual items.
-            So that React will efficiently perform the rendering and DOM manipulations
-            and it will also avoid potential 'state' as well as rendering performance issues in below components */
-            <ExpenseItem
-              key={expense.id}
-              title={expense.title}
-              amount={expense.amount}
-              date={expense.date}
-            />
-          ))}
+        {expensesContent}
       </Card>
     </div>
   );
