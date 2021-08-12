@@ -20,7 +20,10 @@ const AddUser = (props) => {
       return;
     }
 
-    console.log({ username: enteredUsername, age: enteredAge });
+    const newUser = { name: enteredUsername, age: enteredAge, id: Math.random().toString() };
+    console.log(newUser);
+    // lift the state up (to parent)
+    props.onAddUser(newUser);
 
     // reset the form
     setEnteredUsername('');
