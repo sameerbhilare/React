@@ -4,6 +4,9 @@ import styled from 'styled-components';
 
 // tagged template literal - is a JS feature
 // what we pass in the `` is passed as an input to the method 'button' of object 'styled'
+// By default all the styles in .css files are available across the application,
+// which might cause some conflicts andundesired behavior
+// 'styled-components' package allows us to apply styles only to given component.
 const Button = styled.button`
   width: 100%;
   font: inherit;
