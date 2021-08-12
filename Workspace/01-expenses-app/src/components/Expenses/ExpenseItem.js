@@ -23,14 +23,16 @@ const ExpenseItem = (props) => {
   // JSX - must return JSX code with only one root element. (bcz React.createElement() expects only one element)
   // Inside of that root element, we can have many adjacent elements
   return (
-    <Card className='expense-item'>
-      {/* using nested custom component */}
-      <ExpenseDate date={props.date} />
-      <div className='expense-item__description'>
-        <h2>{props.title}</h2>
-        <div className='expense-item__price'>${props.amount}</div>
-      </div>
-    </Card>
+    <li>
+      <Card className='expense-item'>
+        {/* using nested custom component */}
+        <ExpenseDate date={props.date} />
+        <div className='expense-item__description'>
+          <h2>{props.title}</h2>
+          <div className='expense-item__price'>${props.amount}</div>
+        </div>
+      </Card>
+    </li>
   );
 };
 

@@ -3,10 +3,10 @@
 import React, { useState } from 'react';
 
 import Card from '../UI/Card';
-import ExpenseItem from './ExpenseItem';
+import ExpensesFilter from './ExpensesFilter';
+import ExpensesList from './ExpensesList';
 // make the React nuild process aware that this .css should be used for this component
 import './Expenses.css';
-import ExpensesFilter from './ExpensesFilter';
 
 // A component in React is just a JavaScript function
 /* React will pass a single object to our component function which will hold all passed-in parameters
@@ -32,28 +32,12 @@ const Expenses = (props) => {
     (expense) => expense.date.getFullYear() === +filterYear
   );
 
-  let expensesContent = <p>No expenses found!</p>;
-  if (filteredExpenses.length > 0) {
-    expensesContent = filteredExpenses.map((expense) => (
-      /*If you add the 'key' to your component or HTML element with unique value,
-      then you can help React identify the individual items.
-      So that React will efficiently perform the rendering and DOM manipulations
-      and it will also avoid potential 'state' as well as rendering performance issues in below components */
-      <ExpenseItem
-        key={expense.id}
-        title={expense.title}
-        amount={expense.amount}
-        date={expense.date}
-      />
-    ));
-  }
-
   // JSX (JavaScript XML)
   return (
     <div>
       <Card className='expenses'>
         <ExpensesFilter selected={filterYear} onFilterChange={filterChangeHandler} />
-        {expensesContent}
+        <ExpensesList items={filteredExpenses} />
       </Card>
     </div>
   );
