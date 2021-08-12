@@ -1,6 +1,6 @@
 // below import of 'React' is optional in latest versions of React.
 // It is used under the hood when we use JSX code
-import React from 'react';
+import React, { useState } from 'react';
 
 import ExpenseForm from './ExpenseForm';
 // make the React nuild process aware that this .css should be used for this component
@@ -18,11 +18,29 @@ const NewExpense = (props) => {
 
     // call the event handler (communicate to parent)
     props.onAddExpense(expenseData);
+    setOpenDialog(false);
+  };
+
+  // need state to open/close the dialog
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const openAddNewExpenseFormHandler = () => {
+    setOpenDialog(true);
+  };
+
+  const closeNewExpenseFormHandler = () => {
+    setOpenDialog(false);
   };
 
   return (
     <div className='new-expense'>
-      <ExpenseForm onSaveExpenseData={saveExpenseDataHandler} />
+      {!openDialog && <button onClick={openAddNewExpenseFormHandler}>Add New Expense</button>}
+      {openDialog && (
+        <ExpenseForm
+          onSaveExpenseData={saveExpenseDataHandler}
+          onCancel={closeNewExpenseFormHandler}
+        />
+      )}
     </div>
   );
 };
