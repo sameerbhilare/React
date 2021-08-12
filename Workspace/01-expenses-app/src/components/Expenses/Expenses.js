@@ -37,10 +37,10 @@ const Expenses = (props) => {
     <div>
       <Card className='expenses'>
         <ExpensesFilter selected={filterYear} onFilterChange={filterChangeHandler} />
+        {/* TRICK: && returns second expression when first expression is true */}
+        {filteredExpenses.length === 0 && <p>No expenses found!</p>}
         {/* using plain Array map() method to render our components */}
-        {filteredExpenses.length === 0 ? (
-          <p>No expenses found!</p>
-        ) : (
+        {filteredExpenses.length > 0 &&
           filteredExpenses.map((expense) => (
             /*If you add the 'key' to your component or HTML element with unique value,
             then you can help React identify the individual items.
@@ -52,8 +52,7 @@ const Expenses = (props) => {
               amount={expense.amount}
               date={expense.date}
             />
-          ))
-        )}
+          ))}
       </Card>
     </div>
   );
