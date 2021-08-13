@@ -28,6 +28,9 @@ const ModalOverlay = (props) => {
 const ErrorModal = (props) => {
   return (
     <>
+      {/* Wherever you would normally use the Component e.g. <Backdrop ../>, 
+      you can use createPortal to portal/to move that Component's HTML content 
+      somewhere else on the Actual rendered DOM */}
       {ReactDOM.createPortal(
         <Backdrop onDismiss={props.onDismiss} />,
         document.getElementById('backdrop-root')
