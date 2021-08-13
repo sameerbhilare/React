@@ -11,12 +11,21 @@ function App() {
     });
   };
 
+  // <> simply is wrapper provided by React - called Fragment. <> is same as <React.Fragment>
   return (
-    <div>
+    <>
       <AddUser onAddUser={addUserHandler} />
       <UserList users={usersList} />
-    </div>
+    </>
   );
+
+  /*
+  return (
+    <React.Fragment>
+      <AddUser onAddUser={addUserHandler} />
+      <UserList users={usersList} />
+    </React.Fragment>
+  );*/
 }
 
 export default App;
