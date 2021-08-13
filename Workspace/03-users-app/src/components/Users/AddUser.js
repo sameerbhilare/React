@@ -17,6 +17,12 @@ const AddUser = (props) => {
 
     When you want to just read values, use Refs.
     If you want to read/write values, use State
+
+    Using Refs causes those elements (e.g. input) to become 'uncontrolled' elements
+    bcz we're not controlling the state of those input elements with react.
+
+    If we use 'State' instead of Refs, then those input fields will be 'controlled' components
+    bcz their internal state will be controlled by react.
   */
   const nameInputRef = useRef();
   const ageInputRef = useRef();
