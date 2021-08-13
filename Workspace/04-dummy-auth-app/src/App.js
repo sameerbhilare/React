@@ -11,6 +11,11 @@ function App() {
     Handling (Side) Effects with useEffect React hook.
     useEffect() will get called whenever this App component is evaluated/(reevaluated due any state changes)
     However the function inside it (1st argument) will execute ONLY if the dependencies (2nd arg) are changed
+
+    Here the function (1st arg) will run only once when the app starts (or page refreshed from browser).
+    bcz at the start the dependencies (2nd arg) will be new so it will execute the function (1st arg).
+    On future evaluations of this App component, this App component function will run 
+    but then the useEffect function (1st arg) will NOT run bcz the dependencies (2nd arg) are not changed.
   */
   useEffect(() => {
     const storedUserLoginInfo = localStorage.getItem('isLoggedIn');
