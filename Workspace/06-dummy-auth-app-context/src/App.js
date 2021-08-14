@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 import MainHeader from './components/MainHeader/MainHeader';
+import AuthContext from './store/auth-context';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,11 +39,19 @@ function App() {
 
   return (
     <React.Fragment>
-      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
-      <main>
-        {!isLoggedIn && <Login onLogin={loginHandler} />}
-        {isLoggedIn && <Home onLogout={logoutHandler} />}
-      </main>
+      {/*
+        AuthContext provider is a component we can use in our JSX code, 
+        and we can wrap it around other components and those other components and all their descendant components
+        (So all their children and their children's children and so on,) 
+        all those components will now have access to that Context.
+       */}
+      <AuthContext.Provider value={{ isLoggedIn: isLoggedIn }}>
+        <MainHeader onLogout={logoutHandler} />
+        <main>
+          {!isLoggedIn && <Login onLogin={loginHandler} />}
+          {isLoggedIn && <Home onLogout={logoutHandler} />}
+        </main>
+      </AuthContext.Provider>
     </React.Fragment>
   );
 }
