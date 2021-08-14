@@ -13,7 +13,7 @@ const Login = (props) => {
 
   // useEffect without dependencies so it will run for every component run cycle
   useEffect(() => {
-    console.log('Effect running!');
+    //console.log('Effect running!');
   });
 
   // useEffect with empty dependencies so it will run only once when the component is loaded for the first time
@@ -59,14 +59,10 @@ const Login = (props) => {
 
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
-
-    setFormIsValid(event.target.value.includes('@') && enteredPassword.trim().length > 6);
   };
 
   const passwordChangeHandler = (event) => {
     setEnteredPassword(event.target.value);
-
-    setFormIsValid(event.target.value.trim().length > 6 && enteredEmail.includes('@'));
   };
 
   const validateEmailHandler = () => {
