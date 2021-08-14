@@ -9,6 +9,6 @@ import React from 'react';
     1. Provide using 'Provider'
     2. Listen using 'Consumer' or using React Hook useContext()
 */
-const AuthContext = React.createContext({ isLoggedIn: false });
+const AuthContext = React.createContext({ isLoggedIn: false, onLogout: () => {} });
 
 export default AuthContext;

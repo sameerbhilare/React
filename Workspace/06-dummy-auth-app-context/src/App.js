@@ -48,7 +48,6 @@ function App() {
       <AuthContext.Provider
         value={{
           isLoggedIn: isLoggedIn,
-          // dynamic context. (not present in auth-context.js)
           onLogout: logoutHandler,
         }}
       >
