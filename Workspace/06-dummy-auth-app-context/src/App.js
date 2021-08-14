@@ -45,10 +45,18 @@ function App() {
         (So all their children and their children's children and so on,) 
         all those components will now have access to that Context.
        */}
-      <AuthContext.Provider value={{ isLoggedIn: isLoggedIn }}>
-        <MainHeader onLogout={logoutHandler} />
+      <AuthContext.Provider
+        value={{
+          isLoggedIn: isLoggedIn,
+          // dynamic context. (not present in auth-context.js)
+          onLogout: logoutHandler,
+        }}
+      >
+        <MainHeader />
         <main>
           {!isLoggedIn && <Login onLogin={loginHandler} />}
+          {/* We should pass logoutHandler below instead of using from context 
+              bcz in the Home component we are directly using it and not just 'forwards' it to child components*/}
           {isLoggedIn && <Home onLogout={logoutHandler} />}
         </main>
       </AuthContext.Provider>
