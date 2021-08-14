@@ -11,69 +11,47 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
-  // useEffect without dependencies so it will run for every component run cycle
-  useEffect(() => {
-    console.log('Effect running!');
-  });
-
-  // useEffect with empty dependencies so it will run only once when the component is loaded for the first time
-  useEffect(() => {
-    console.log('Effect running once only !');
-  }, []);
-
-  /*
-    Handling (Side) Effects with useEffect React hook.
-    Whenever you have an action that should be executed in response to some other action, that is a "side effect".
-    useEffect() will get called whenever this App component is evaluated/(reevaluated due any state changes)
-    However the function inside it (1st argument) will execute ONLY if the dependencies (2nd arg) are changed
-
-    We want to call setFormIsValid() only if the email or password fields are changed (side effect of user entering some data)
-  */
-  useEffect(
-    /*
-      IMPLEMENTING DEBOUNCE TIME - to avoid setTimeout function execution for each key stroke
-      The idea is to wait for 500 ms. 
-      If user doesn't type anthing for 500 ms, then only setTimeout function executes. Otherwise the timeout will be cleared in the cleanup function below
-    */
-
-    // side-effect function (1st arg)
-    () => {
-      const identifier = setTimeout(() => {
-        console.log('checking form validity');
-        setFormIsValid(enteredEmail.includes('@') && enteredPassword.trim().length > 6);
-      }, 500);
-
-      // returning 'Cleanup function'
-      // This returned function will run as a cleanup process before useEffect executes this function the next time.
-      // In addition, this cleanup function will run whenever
-      // the component you're specifying the effect in unmounts from the DOM. So whenever the component is removed.
-      // it will not run for the first side-effect execution (obviously).
-      return () => {
-        console.log('CLEANUP');
-        clearTimeout(identifier);
-      };
-    },
-    // dependencies (2nd arg)
-    [enteredEmail, enteredPassword]
-  );
-
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
 
+    /*
+    RULE VIOLATION: Here we are setting one state (formIsValid) based on other states (enteredPassword)
+    We should change a state based on its own previous state
+    If you update a state, which depends on another state, then merging this into one state could be a good idea.
+    In such cases we can use useState with an object but that can become complex, so use useReducer
+    */
     setFormIsValid(event.target.value.includes('@') && enteredPassword.trim().length > 6);
   };
 
   const passwordChangeHandler = (event) => {
     setEnteredPassword(event.target.value);
 
+    /*
+    RULE VIOLATION: Here we are setting one state (formIsValid) based on other states (enteredEmail)
+    We should change a state based on its own previous state.
+    If you update a state, which depends on another state, then merging this into one state could be a good idea.
+    In such cases we can use useState with an object but that can become complex, so use useReducer
+    */
     setFormIsValid(event.target.value.trim().length > 6 && enteredEmail.includes('@'));
   };
 
   const validateEmailHandler = () => {
+    /*
+    RULE VIOLATION: Here we are setting one state (emailIsValid) based on other states (enteredEmail)
+    We should change a state based on its own previous state
+    If you update a state, which depends on another state, then merging this into one state could be a good idea.
+    In such cases we can use useState with an object but that can become complex, so use useReducer
+    */
     setEmailIsValid(enteredEmail.includes('@'));
   };
 
   const validatePasswordHandler = () => {
+    /*
+    RULE VIOLATION: Here we are setting one state (passwordIsValid) based on other states (enteredPassword)
+    We should change a state based on its own previous state
+    If you update a state, which depends on another state, then merging this into one state could be a good idea.
+    In such cases we can use useState with an object but that can become complex, so use useReducer
+    */
     setPasswordIsValid(enteredPassword.trim().length > 6);
   };
 
