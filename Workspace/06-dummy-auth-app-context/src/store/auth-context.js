@@ -7,7 +7,7 @@ import React from 'react';
 
     There are 2 steps once a React Context is created  -
     1. Provide using 'Provider'
-    2. Listen using 'Consumer' or using React Hook
+    2. Listen using 'Consumer' or using React Hook useContext()
 */
 const AuthContext = React.createContext({ isLoggedIn: false });
 
