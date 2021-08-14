@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -68,6 +68,44 @@ const Login = (props) => {
     { value: '', isValid: undefined }
   );
 
+  // using object destructuring to get specific fields and providing then alias
+  // advantage is the useEffect will run only when validity changes, not when value changes. so better OPTIMIZATION
+  const { isValid: isEmailValid } = emailState;
+  const { isValid: isPasswordValid } = passwordState;
+  /*
+    Handling (Side) Effects with useEffect React hook.
+    Whenever you have an action that should be executed in response to some other action, that is a "side effect".
+    useEffect() will get called whenever this App component is evaluated/(reevaluated due any state changes)
+    However the function inside it (1st argument) will execute ONLY if the dependencies (2nd arg) are changed
+  */
+  useEffect(
+    /*
+        IMPLEMENTING DEBOUNCE TIME - to avoid setTimeout function execution for each key stroke
+        The idea is to wait for 500 ms. 
+        If user doesn't type anthing for 500 ms, then only setTimeout function executes. Otherwise the timeout will be cleared in the cleanup function below
+      */
+
+    // side-effect function (1st arg)
+    () => {
+      const identifier = setTimeout(() => {
+        console.log('checking form validity');
+        setFormIsValid(isEmailValid && isPasswordValid);
+      }, 500);
+
+      // returning 'Cleanup function'
+      // This returned function will run as a cleanup process before useEffect executes this function the next time.
+      // In addition, this cleanup function will run whenever
+      // the component you're specifying the effect in unmounts from the DOM. So whenever the component is removed.
+      // it will not run for the first side-effect execution (obviously).
+      return () => {
+        console.log('CLEANUP');
+        clearTimeout(identifier);
+      };
+    },
+    // dependencies (2nd arg)
+    [isEmailValid, isPasswordValid]
+  );
+
   const emailChangeHandler = (event) => {
     //setEnteredEmail(event.target.value);
 
@@ -83,7 +121,9 @@ const Login = (props) => {
     //setFormIsValid(event.target.value.includes('@') && enteredPassword.trim().length > 6);
 
     // PROPER WAY: using useReducer
-    setFormIsValid(event.target.value.includes('@') && passwordState.value.trim().length > 6);
+    //setFormIsValid(event.target.value.includes('@') && passwordState.value.trim().length > 6);
+
+    // BEST WAY: using useEffect above
   };
 
   const passwordChangeHandler = (event) => {
@@ -100,7 +140,9 @@ const Login = (props) => {
     //setFormIsValid(event.target.value.trim().length > 6 && enteredEmail.includes('@'));
 
     // PROPER WAY: using useReducer
-    setFormIsValid(event.target.value.trim().length > 6 && emailState.isValid);
+    //setFormIsValid(event.target.value.trim().length > 6 && emailState.isValid);
+
+    // BEST WAY: using useEffect above
   };
 
   const validateEmailHandler = () => {
