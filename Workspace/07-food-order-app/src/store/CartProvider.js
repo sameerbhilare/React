@@ -8,9 +8,25 @@ const defaultCartState = {
 
 const cartReducer = (state, action) => {
   if (action.type === 'ADD_ITEM') {
-    const updatedItems = state.items.concat(action.item); // to update state in immutable way
     const updatedTotalAmount = state.amount + action.item.price * action.item.amount; // item.amount means quantity
-    console.log({ state, action, updatedTotalAmount });
+
+    const existingCartItemIndex = state.items.findIndex((item) => item.id === action.item.id);
+    const existingCartItem = state.items[existingCartItemIndex];
+
+    let updatedItems;
+    if (existingCartItem) {
+      // item already added so update it
+      const updatedItem = {
+        ...existingCartItem,
+        amount: existingCartItem.amount + action.item.amount,
+      };
+      updatedItems = [...state.items];
+      updatedItems[existingCartItemIndex] = updatedItem;
+    } else {
+      // new item
+      updatedItems = state.items.concat(action.item); // to update state in immutable way
+    }
+
     return {
       items: updatedItems,
       amount: updatedTotalAmount,
