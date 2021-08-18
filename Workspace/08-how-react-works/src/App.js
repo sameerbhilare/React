@@ -52,7 +52,22 @@ function App() {
     setListTitle('New Title');
   }, []);
 
-  const listItems = useMemo(() => [5, 3, 1, 10, 9], []);
+  /*
+    useMemo basically allows you to basically "memoize"/store any kind of data which you want to store.
+    Just like useCallback does it for functions.
+    This will ensure that the === check which react does inside DemoList will work properly 
+    since arrays are reference types so 2 different arrays of same element are never ===.
+    useMemo() stores that array/object. Hence === passes.
+
+    useMemo is far less often used than you use useCallback 
+    because memorizing functions is much more useful, and you need that more often than memorizing data.
+    You essentially wanna memorize data if it would be performance-intensive 
+    to recalculate something based on it.
+    Otherwise, it might not really be worth it because if you store data with useMemo,
+    of course, it occupies some memory and of course this storing functionality also takes up some performance.
+    So this is not something you wanna use on every value you're using.
+  */
+  const listItems = useMemo(() => [5, 3, 1, 10, 9], []); // no dependencies as we dont want to update it
 
   return (
     <div className='app'>

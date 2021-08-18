@@ -5,8 +5,25 @@ import classes from './DemoList.module.css';
 const DemoList = (props) => {
   const { items } = props;
 
+  /*
+    DemoList will be reevaluated if any of the props passed are changed. 
+    This is the expected behaviour however in certain cases, 
+    we would not want to repeat some of the performance intensive tasks in the component function.
+    e.g. if props.title changes, we would not want to perform sorting of the props.items
+    as that is unnecessary and time consuming.
+
+    The solution is to use useMemo() hook.
+    useMemo basically allows you to basically "memoize"/store any kind of data which you want to store.
+    Just like useCallback does it for functions.
+
+    Memoization: 
+    In computing, memoization or memoisation is an optimization technique used primarily 
+    to speed up computer programs by storing the results of expensive function calls 
+    and returning the cached result when the same inputs occur again.
+  */
   const sortedList = useMemo(() => {
     console.log('Items sorted');
+    // return value. And this value is updated whenever the dependencies(2nd arg) change
     return items.sort((a, b) => a - b);
   }, [items]);
   console.log('DemoList RUNNING');
