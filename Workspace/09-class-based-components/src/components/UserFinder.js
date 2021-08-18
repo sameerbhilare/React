@@ -16,11 +16,19 @@ class UserFinder extends Component {
     };
   }
 
+  /*
+    Called once component mounted (was evaluated & rendered)
+    Similar to useEffect(…, []) // with empty dependencies
+  */
   componentDidMount() {
     // Send http request...
     this.setState({ filteredUsers: this.context.users });
   }
 
+  /*
+    Called once component updated (was evaluated & rendered)
+    Similar to useEffect(…, [someValue]) // with some dependencies
+  */
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchTerm !== this.state.searchTerm) {
       this.setState({

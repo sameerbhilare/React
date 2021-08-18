@@ -11,6 +11,10 @@ import classes from './User.module.css';
   Class-based components can work together with functional components.
 */
 class User extends Component {
+  /*
+    Called right before component is unmounted (removed from DOM)
+    Similar to clean up function from useEffect. useEffect(() => { return () => {…}}, [])
+  */
   componentWillUnmount() {
     console.log('User will unmount!');
   }
