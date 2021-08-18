@@ -5,7 +5,11 @@ import classes from './Users.module.css';
 
 class Users extends Component {
   constructor() {
-    super();
+    super(); // must
+    /*
+      With class-based components, your state always is an object and the name must be 'state'.
+      With functional components, your state can be anything (Boolean, string, number or object)
+    */
     this.state = {
       showUsers: true,
       more: 'Test',
@@ -25,6 +29,12 @@ class Users extends Component {
 
   toggleUsersHandler() {
     // this.state.showUsers = false; // NOT!
+
+    /*
+      This is how we can update 'state'.
+      We can direct set the new state or use function arg if new state depends on prev state.
+      In this case, react 'merges' this update with the existing state and it doesn't override the state.
+    */
     this.setState((curState) => {
       return { showUsers: !curState.showUsers };
     });
@@ -41,6 +51,7 @@ class Users extends Component {
 
     return (
       <div className={classes.users}>
+        {/* Note: we have to use bind(this) */}
         <button onClick={this.toggleUsersHandler.bind(this)}>
           {this.state.showUsers ? 'Hide' : 'Show'} Users
         </button>
