@@ -28,8 +28,11 @@ class UserFinder extends Component {
   /*
     Called once component updated (was evaluated & rendered)
     Similar to useEffect(…, [someValue]) // with some dependencies
+
+    componentDidUpdate receives 2 args. previous properties and previuos state
   */
   componentDidUpdate(prevProps, prevState) {
+    // if check to avoid infinite loop
     if (prevState.searchTerm !== this.state.searchTerm) {
       this.setState({
         filteredUsers: this.context.users.filter((user) =>
