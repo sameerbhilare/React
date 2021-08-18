@@ -18,7 +18,7 @@ function App() {
     and it instead simply updates that state as needed 
     because this component function reran because some state changed most likely, 
     and therefore React will only do that state management and updating. 
-    
+
     It will never reinitialize the state 
     unless the component was totally removed from the DOM in the meantime.
 
@@ -36,6 +36,19 @@ function App() {
     the function inside useCallback() should be recreated.
   */
   const changeTitleHandler = useCallback(() => {
+    /*
+      calling below state update function setListTitle() will not immediately update the state
+      but react will "schedule" the state update. So it will not be available on the next line.
+      
+      If there are multiple state changes to the same state, 
+      React guarantees that those are scheduled in their order.
+
+      Lets say if there are 2 state changes to 2 different states 
+      AND if they are in the same synchronous code, 
+      e.g. calling setListTitle('New Title'); setAnotherState('ABCD'); 
+      Here react does not create 2 different "schedules" 
+      but it will create one single "batch" of scheduled state changes.
+    */
     setListTitle('New Title');
   }, []);
 
