@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 /*
     Custom hook name MUST start with 'use' word.
@@ -8,11 +8,11 @@ import { useState } from 'react';
 
     Custom Hook function can accept parameters just like built-in hooks.
 */
-const useHttp = (requestConfig, applyDataCallback) => {
+const useHttp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const sendRequest = async () => {
+  const sendRequest = useCallback(async (requestConfig, applyDataCallback) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -38,7 +38,7 @@ const useHttp = (requestConfig, applyDataCallback) => {
       setError(err.message || 'Something went wrong!');
     }
     setIsLoading(false);
-  };
+  }, []);
 
   // return to the component
   return {
