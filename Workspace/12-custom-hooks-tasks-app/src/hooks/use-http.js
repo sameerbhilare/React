@@ -12,7 +12,7 @@ const useHttp = (requestConfig, applyDataCallback) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const sendRequest = async (taskText) => {
+  const sendRequest = async () => {
     setIsLoading(true);
     setError(null);
     try {
@@ -20,9 +20,9 @@ const useHttp = (requestConfig, applyDataCallback) => {
         requestConfig.url,
         //'https://react-http-dba8a-default-rtdb.asia-southeast1.firebasedatabase.app/tasks.json'
         {
-          method: requestConfig.method,
-          headers: requestConfig.headers,
-          body: JSON.stringify(requestConfig.body),
+          method: requestConfig.method ? requestConfig.method : 'GET',
+          headers: requestConfig.headers ? requestConfig.headers : {},
+          body: requestConfig.body ? JSON.stringify(requestConfig.body) : null,
         }
       );
 
