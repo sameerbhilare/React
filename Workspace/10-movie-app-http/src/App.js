@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
@@ -8,7 +8,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchMoviesHandler = async () => {
+  // useCallback to avoid recreation of fetchMoviesHandler function
+  const fetchMoviesHandler = useCallback(async () => {
     setIsLoading(true); // loading data
     setError(null); // error state
 
@@ -34,7 +35,12 @@ function App() {
       setError(error.message);
     }
     setIsLoading(false); // loading data finished
-  };
+  }, []); // no need to add state updating functions (setIsLoading,setMovies,etc.) bcz React guarantees that they dont change
+
+  // fetch movies as soon as component is loaded and when fetchMoviesHandler function changes
+  useEffect(() => {
+    fetchMoviesHandler();
+  }, [fetchMoviesHandler]);
 
   let content = <p>No movies found!</p>;
 
