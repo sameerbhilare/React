@@ -60,6 +60,7 @@ class UserFinder extends Component {
         <div className={classes.finder}>
           <input type='search' onChange={this.searchChangeHandler.bind(this)} />
         </div>
+        {/* Wrapping Users component by ErrorBoundary*/}
         <ErrorBoundary>
           <Users users={this.state.filteredUsers} />
         </ErrorBoundary>
