@@ -6,6 +6,14 @@ import UsersContext from '../store/users-context';
 import ErrorBoundary from './ErrorBoundary';
 
 class UserFinder extends Component {
+  /*
+    Using context -
+    With belowline you're telling React this component should have access to the UsersContext context,
+    but you can only set the static context type property once 
+    so if there are two contexts which should be connected to one at the same component, 
+    this would simply not be an option. You would have to find some other work around 
+    like wrapping it in a number component or anything like that.
+  */
   static contextType = UsersContext;
 
   constructor() {
@@ -22,7 +30,7 @@ class UserFinder extends Component {
   */
   componentDidMount() {
     // Send http request...
-    this.setState({ filteredUsers: this.context.users });
+    this.setState({ filteredUsers: this.context.users }); // using the context via 'this.context'
   }
 
   /*
