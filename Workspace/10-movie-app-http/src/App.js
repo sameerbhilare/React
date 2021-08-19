@@ -26,6 +26,20 @@ function App() {
       }
 
       const data = await response.json();
+      console.log(data);
+
+      let loadedMovies = [];
+      for (const key in data) {
+        loadedMovies.push({
+          id: key,
+          title: data[key].title,
+          releaseDate: data[key].releaseDate,
+          openingText: data[key].openingText,
+        });
+      }
+      setMovies(loadedMovies);
+
+      /* // for star wars API
       const transformedMovies = data.results.map((movieData) => {
         return {
           id: movieData.episode_id,
@@ -35,6 +49,7 @@ function App() {
         };
       });
       setMovies(transformedMovies);
+      */
     } catch (error) {
       setError(error.message);
     }
@@ -46,8 +61,23 @@ function App() {
     fetchMoviesHandler();
   }, [fetchMoviesHandler]);
 
-  const addMovieHandler = (movie) => {
-    console.log(movie);
+  /*
+    Sending POST request to store movie to our firebase backend
+  */
+  const addMovieHandler = async (movie) => {
+    const response = await fetch(
+      'https://react-http-dba8a-default-rtdb.asia-southeast1.firebasedatabase.app/movies.json',
+      {
+        method: 'POST',
+        body: JSON.stringify(movie), // need to convert JS object to JSON
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const data = await response.json();
+    console.log(data);
   };
 
   let content = <p>No movies found!</p>;
