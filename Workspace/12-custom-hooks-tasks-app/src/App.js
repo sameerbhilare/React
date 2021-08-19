@@ -13,7 +13,7 @@ function App() {
     setError(null);
     try {
       const response = await fetch(
-        'https://react-http-6b4a6.firebaseio.com/tasks.json'
+        'https://react-http-dba8a-default-rtdb.asia-southeast1.firebasedatabase.app/tasks.json'
       );
 
       if (!response.ok) {
@@ -46,12 +46,7 @@ function App() {
   return (
     <React.Fragment>
       <NewTask onAddTask={taskAddHandler} />
-      <Tasks
-        items={tasks}
-        loading={isLoading}
-        error={error}
-        onFetch={fetchTasks}
-      />
+      <Tasks items={tasks} loading={isLoading} error={error} onFetch={fetchTasks} />
     </React.Fragment>
   );
 }
