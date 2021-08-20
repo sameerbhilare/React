@@ -11,6 +11,12 @@ const SimpleInput = (props) => {
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
+
+    // IMP - we must NOT use 'enteredName' here bcz as we know React schedules above state update
+    // and latest state will not be immediately available on below line
+    if (event.target.value.trim() !== '') {
+      setEnteredNameIsValid(true);
+    }
   };
 
   const nameInputBlurHandler = (event) => {
@@ -19,7 +25,6 @@ const SimpleInput = (props) => {
     // basic validation
     if (enteredName.trim().length === 0) {
       setEnteredNameIsValid(false);
-      return;
     }
   };
 
