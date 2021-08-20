@@ -13,6 +13,12 @@ const SimpleInput = (props) => {
 
   const formSubmissionHandler = (event) => {
     event.preventDefault(); // imp
+
+    // basic validation
+    if (enteredName.trim().length === 0) {
+      return;
+    }
+
     console.log(enteredName);
     console.log(nameInputRef.current.value);
 
