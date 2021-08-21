@@ -1,39 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // importing the styles
 import styles from './AvailableMeals.module.css';
 import MealItem from './MealItem/MealIteam';
 import Card from '../UI/Card';
 
-const DUMMY_MEALS = [
-  {
-    id: 'm1',
-    name: 'Sushi',
-    description: 'Finest fish and veggies',
-    price: 22.99,
-  },
-  {
-    id: 'm2',
-    name: 'Schnitzel',
-    description: 'A german specialty!',
-    price: 16.5,
-  },
-  {
-    id: 'm3',
-    name: 'Barbecue Burger',
-    description: 'American, raw, meaty',
-    price: 12.99,
-  },
-  {
-    id: 'm4',
-    name: 'Green Bowl',
-    description: 'Healthy...and green...',
-    price: 18.99,
-  },
-];
-
 const AvailableMeals = () => {
-  const mealsList = DUMMY_MEALS.map((meal) => (
+  const [meals, setMeals] = useState([]);
+
+  /*
+    The function you pass to useEffect should not return a promise. 
+    Instead, the function you pass to useEffect may return a cleanup function which can be executed.
+  */
+  useEffect(() => {
+    // define async function
+    const fetchMeals = async () => {
+      const response = await fetch(
+        'https://react-http-dba8a-default-rtdb.asia-southeast1.firebasedatabase.app/meals.json'
+      );
+
+      const fetchedMeals = [];
+      const data = await response.json();
+      for (const key in data) {
+        fetchedMeals.push({
+          id: key,
+          name: data[key].name,
+          description: data[key].description,
+          price: data[key].price,
+        });
+      }
+
+      setMeals(fetchedMeals);
+    };
+
+    // execute async function
+    fetchMeals();
+  }, []);
+
+  const mealsList = meals.map((meal) => (
     <MealItem
       id={meal.id}
       key={meal.id}
