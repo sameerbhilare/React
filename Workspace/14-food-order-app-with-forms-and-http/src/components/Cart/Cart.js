@@ -10,6 +10,8 @@ const Cart = (props) => {
   const cartCtx = useContext(CartContext);
 
   const [isCheckout, setIsCheckout] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [didSubmit, setDidSubmit] = useState(false);
 
   const hasItems = cartCtx.items.length > 0;
 
@@ -43,15 +45,18 @@ const Cart = (props) => {
     setIsCheckout(true);
   };
 
-  const submitOrderHandler = (userData) => {
+  const submitOrderHandler = async (userData) => {
+    setIsSubmitting(true);
     // send cart items and user data to backend
-    fetch(
+    await fetch(
       'https://react-http-dba8a-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json',
       {
         method: 'POST',
         body: JSON.stringify({ user: userData, orderedItems: cartCtx.items }),
       }
     );
+    setIsSubmitting(false);
+    setDidSubmit(true);
   };
 
   const modalActions = (
@@ -67,8 +72,8 @@ const Cart = (props) => {
     </div>
   );
 
-  return (
-    <Modal onClose={props.onClose}>
+  const cartModalContent = (
+    <>
       {cartItems}
       <div className={styles.total}>
         <span>Total Amount</span>
@@ -76,6 +81,27 @@ const Cart = (props) => {
       </div>
       {isCheckout && <Checkout onConfirm={submitOrderHandler} onCancel={props.onClose} />}
       {!isCheckout && modalActions}
+    </>
+  );
+
+  const isSubmittingModalData = <p>Sending order data...</p>;
+
+  const didSubmitModalData = (
+    <>
+      <p>Successfully send order!</p>
+      <div className={styles.actions}>
+        <button className={styles.button} onClick={props.onClose}>
+          Close
+        </button>
+      </div>
+    </>
+  );
+
+  return (
+    <Modal onClose={props.onClose}>
+      {!isSubmitting && !didSubmit && cartModalContent}
+      {isSubmitting && isSubmittingModalData}
+      {!isSubmitting && didSubmit && didSubmitModalData}
     </Modal>
   );
 };
