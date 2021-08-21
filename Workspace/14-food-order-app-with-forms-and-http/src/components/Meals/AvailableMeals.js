@@ -8,6 +8,7 @@ import Card from '../UI/Card';
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [httpError, setHttpError] = useState(null);
 
   /*
     The function you pass to useEffect should not return a promise. 
@@ -20,6 +21,10 @@ const AvailableMeals = () => {
       const response = await fetch(
         'https://react-http-dba8a-default-rtdb.asia-southeast1.firebasedatabase.app/meals.json'
       );
+
+      if (!response.ok) {
+        throw new Error('Something went wrong!');
+      }
 
       const fetchedMeals = [];
       const data = await response.json();
@@ -37,13 +42,24 @@ const AvailableMeals = () => {
     };
 
     // execute async function
-    fetchMeals();
+    fetchMeals().catch((error) => {
+      setIsLoading(false);
+      setHttpError(error.message);
+    });
   }, []);
 
   if (isLoading) {
     return (
       <section className={styles.MealsLoading}>
         <p>Loading...</p>
+      </section>
+    );
+  }
+
+  if (httpError) {
+    return (
+      <section className={styles.MealsError}>
+        <p>{httpError}</p>
       </section>
     );
   }
