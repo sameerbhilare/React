@@ -7,6 +7,7 @@ import Card from '../UI/Card';
 
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   /*
     The function you pass to useEffect should not return a promise. 
@@ -15,6 +16,7 @@ const AvailableMeals = () => {
   useEffect(() => {
     // define async function
     const fetchMeals = async () => {
+      setIsLoading(true);
       const response = await fetch(
         'https://react-http-dba8a-default-rtdb.asia-southeast1.firebasedatabase.app/meals.json'
       );
@@ -31,11 +33,20 @@ const AvailableMeals = () => {
       }
 
       setMeals(fetchedMeals);
+      setIsLoading(false);
     };
 
     // execute async function
     fetchMeals();
   }, []);
+
+  if (isLoading) {
+    return (
+      <section className={styles.MealsLoading}>
+        <p>Loading...</p>
+      </section>
+    );
+  }
 
   const mealsList = meals.map((meal) => (
     <MealItem
