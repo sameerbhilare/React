@@ -51,6 +51,12 @@ const Checkout = (props) => {
     }
 
     // submit cart data
+    props.onConfirm({
+      name: enteredName,
+      street: enteredStreet,
+      city: enteredCity,
+      postalCode: enteredPostalCode,
+    });
   };
 
   // CSS classes basd on conditions
