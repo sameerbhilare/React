@@ -40,14 +40,4 @@ const counterReducer = (state = { counter: 0 }, action) => {
 */
 const store = createStore(counterReducer); // createStore is from 'redux' package
 
-// subscription
-/*
-    This subscription function will soon be triggered whenever the state changes. 
-    And then when it is triggered, we can get to that latest state
-*/
-const counterSubscriber = () => {
-  // get latest state snapshot. 'getState()' is available on the store
-  const latestState = store.getState();
-  console.log(latestState);
-};
 export default store;

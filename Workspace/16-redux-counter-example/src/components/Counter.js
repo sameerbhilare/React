@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import classes from './Counter.module.css';
 
 const Counter = () => {
@@ -20,12 +20,30 @@ const Counter = () => {
   */
   const counter = useSelector((state) => state.counter);
 
+  /*
+    useDispatch hook is used to dispatch actions on the Redux store.
+    useDispatch returns a function which we can use to dispatch actual actions.
+  */
+  const dispatch = useDispatch();
+
+  const incrementHandler = () => {
+    dispatch({ type: 'increment' }); // dispatch 'increment' action
+  };
+
+  const decrementHandler = () => {
+    dispatch({ type: 'decrement' }); // dispatch 'decrement' action
+  };
+
   const toggleCounterHandler = () => {};
 
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
       <div className={classes.value}>{counter}</div>
+      <div>
+        <button onClick={incrementHandler}>Increment</button>
+        <button onClick={decrementHandler}>Decrement</button>
+      </div>
       <button onClick={toggleCounterHandler}>Toggle Counter</button>
     </main>
   );
