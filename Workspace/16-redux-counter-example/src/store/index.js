@@ -19,6 +19,17 @@ const initialState = {
 
     Instead, a reducer should really just be a function that takes the given inputs, 
     which are provided by Redux and then produces the expected output, a new state object.
+
+    The objects which we return in the reducer will not be merged with the existing state.
+    They will overwrite the existing state. 
+    So we must always set all the other states when we update a piece of state.
+
+    **************** IMPORTANT **************** 
+    When working with Redux, Never mutate the existing state. 
+    This can lead to bugs, unpredictable behavior and it can make debugging your application harder as well. 
+    Instead, always override the state by returning a brand new state object.
+    And because objects and arrays are reference values in JavaScript, 
+    it's easy to accidentally override and change the existing state. So be careful !!!
 */
 const counterReducer = (state = initialState, action) => {
   if (action.type === 'increment') {
