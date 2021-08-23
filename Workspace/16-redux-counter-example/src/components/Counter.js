@@ -21,8 +21,8 @@ const Counter = () => {
 
     Side Note - the 'store' arg which useSelector gets it is the one which is setup in index.js via Provider
   */
-  const counter = useSelector((state) => state.counter);
-  const showCounter = useSelector((state) => state.showCounter);
+  const counter = useSelector((state) => state.counter.counter);
+  const showCounter = useSelector((state) => state.counter.showCounter);
 
   /*
     useDispatch hook is used to dispatch actions on the Redux store.

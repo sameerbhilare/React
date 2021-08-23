@@ -1,7 +1,7 @@
 // REDUX Logic
 import { createSlice, configureStore } from '@reduxjs/toolkit';
 
-const initialState = {
+const initialCounterState = {
   counter: 0,
   showCounter: true,
 };
@@ -25,7 +25,7 @@ const initialState = {
 */
 const counterSlice = createSlice({
   name: 'counter',
-  initialState: initialState,
+  initialState: initialCounterState,
   reducers: {
     increment(state) {
       // here it is allowed to 'mutate' the state bcz :) ->
@@ -54,19 +54,39 @@ const counterSlice = createSlice({
   },
 });
 
+// initial state for Auth slice
+const initialAuthState = { isAuthenticated: false };
+
+// create new slice for Auth
+const authSlice = createSlice({
+  name: 'authentication',
+  initialState: initialAuthState,
+  reducers: {
+    login(state) {
+      state.isAuthenticated = true;
+    },
+    logout(state) {
+      state.isAuthenticated = false;
+    },
+  },
+});
+
 // create a store
 // configureStore() is powerful, we can add multiple slices of a store with it.
 const store = configureStore({
   // value to this 'reducer' key be reducer of a single slice
   // or a map of reduers of multiple slices and
   // behind the scenes configureStore will merge all those reducers into one big reducer.
-  reducer: counterSlice.reducer, // single slice
+  //reducer: counterSlice.reducer, // single slice
 
-  //reducer: {counter: counterSlice.reducer} // multiple slices.
+  // individual reducers will be automatically merged into one main reducer internally
+  // the keys here are imp ('counter', 'auth'), they are used to get specific slices
+  reducer: { counter: counterSlice.reducer, auth: authSlice.reducer }, // multiple slices.
 });
 
-//createSlice automatically creates unique action identifiers for our different reducers.
+// createSlice automatically creates unique action identifiers for our different reducers.
 // Those actions can be accessed via 'counterSlice.actions.
 export const counterActions = counterSlice.actions;
+export const authActions = authSlice.actions;
 
 export default store;
