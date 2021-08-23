@@ -17,6 +17,8 @@ const Counter = () => {
     whenever that data changes in the Redux store.
     If you ever would unmount this component or if it would be removed from the DOM for whatever reason,
     React Redux would also automatically clear the subscription for you.
+
+    Side Note - the 'store' arg which useSelector gets it is the one which is setup in index.js via Provider
   */
   const counter = useSelector((state) => state.counter);
 
