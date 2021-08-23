@@ -19,6 +19,9 @@ const initialState = {
     and 'reducers' which is an object of all the reducers this slice needs.
     Each reducer method will be called for you by Redux, and they will receive the current state and action obj.
     It may not require action bcz these reducer methods will be called based on action itself
+
+    createSlice automatically creates unique action identifiers for our different reducers.
+    Those actions can be accessed via 'counterSlice.actions.'
 */
 const counterSlice = createSlice({
   name: 'counter',
@@ -42,7 +45,7 @@ const counterSlice = createSlice({
     },
 
     increase(state, action) {
-      state.counter = state.counter + action.amount; // using payload
+      state.counter = state.counter + action.payload; // using payload
     },
 
     toggleCounter(state) {
@@ -52,9 +55,7 @@ const counterSlice = createSlice({
 });
 
 // create a store
-/*
-    configureStore() is powerful, we can add multiple slices of a store with it.
-*/
+// configureStore() is powerful, we can add multiple slices of a store with it.
 const store = configureStore({
   // value to this 'reducer' key be reducer of a single slice
   // or a map of reduers of multiple slices and
@@ -63,5 +64,9 @@ const store = configureStore({
 
   //reducer: {counter: counterSlice.reducer} // multiple slices.
 });
+
+//createSlice automatically creates unique action identifiers for our different reducers.
+// Those actions can be accessed via 'counterSlice.actions.
+export const counterActions = counterSlice.actions;
 
 export default store;

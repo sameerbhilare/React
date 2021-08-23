@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import classes from './Counter.module.css';
+import { counterActions } from '../store/index';
 
 const Counter = () => {
   /*
@@ -30,19 +31,35 @@ const Counter = () => {
   const dispatch = useDispatch();
 
   const incrementHandler = () => {
-    dispatch({ type: 'increment' }); // dispatch 'increment' action
+    // when counterActions.increment() is executed, it creates a full action object
+    // with the type set to this automatically created unique action identifier.
+    dispatch(counterActions.increment());
+
+    // dispatch({ type: 'increment' }); // dispatch 'increment' action
   };
 
   const increaseHandler = () => {
-    dispatch({ type: 'increase', amount: 5 }); // dispatch 'increase' action and passing payload
+    // when counterActions.decrement() is executed, it creates a full action object
+    // with the type set to this automatically created unique action identifier.
+    dispatch(counterActions.increase(5)); // internally =>  { type: 'increase', payload: 5 } ****
+
+    // dispatch({ type: 'increase', amount: 5 }); // dispatch 'increase' action and passing payload
   };
 
   const decrementHandler = () => {
-    dispatch({ type: 'decrement' }); // dispatch 'decrement' action
+    // when counterActions.decrement() is executed, it creates a full action object
+    // with the type set to this automatically created unique action identifier.
+    dispatch(counterActions.decrement());
+
+    //dispatch({ type: 'decrement' }); // dispatch 'decrement' action
   };
 
   const toggleCounterHandler = () => {
-    dispatch({ type: 'toggle' }); // dispatch 'toggle' action
+    // when counterActions.toggleCounter() is executed, it creates a full action object
+    // with the type set to this automatically created unique action identifier.
+    dispatch(counterActions.toggleCounter());
+
+    //dispatch({ type: 'toggle' }); // dispatch 'toggle' action
   };
 
   return (
