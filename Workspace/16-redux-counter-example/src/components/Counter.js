@@ -21,6 +21,7 @@ const Counter = () => {
     Side Note - the 'store' arg which useSelector gets it is the one which is setup in index.js via Provider
   */
   const counter = useSelector((state) => state.counter);
+  const showCounter = useSelector((state) => state.showCounter);
 
   /*
     useDispatch hook is used to dispatch actions on the Redux store.
@@ -40,12 +41,14 @@ const Counter = () => {
     dispatch({ type: 'decrement' }); // dispatch 'decrement' action
   };
 
-  const toggleCounterHandler = () => {};
+  const toggleCounterHandler = () => {
+    dispatch({ type: 'toggle' }); // dispatch 'toggle' action
+  };
 
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      <div className={classes.value}>{counter}</div>
+      {showCounter && <div className={classes.value}>{counter}</div>}
       <div>
         <button onClick={incrementHandler}>Increment</button>
         <button onClick={increaseHandler}>Increment by 5</button>

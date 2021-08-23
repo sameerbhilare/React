@@ -1,6 +1,10 @@
 // REDUX Logic
 import { createStore } from 'redux';
 
+const initialState = {
+  counter: 0,
+  showCounter: true,
+};
 /*
     Reducer function - which will update the state in the store.
     A reducer function is a standard JavaScript function, but it will it be called by the Redux library
@@ -16,22 +20,32 @@ import { createStore } from 'redux';
     Instead, a reducer should really just be a function that takes the given inputs, 
     which are provided by Redux and then produces the expected output, a new state object.
 */
-const counterReducer = (state = { counter: 0 }, action) => {
+const counterReducer = (state = initialState, action) => {
   if (action.type === 'increment') {
     return {
       counter: state.counter + 1,
+      showCounter: state.showCounter,
     };
   }
 
   if (action.type === 'increase') {
     return {
       counter: state.counter + action.amount, // using payload
+      showCounter: state.showCounter,
     };
   }
 
   if (action.type === 'decrement') {
     return {
       counter: state.counter - 1,
+      showCounter: state.showCounter,
+    };
+  }
+
+  if (action.type === 'toggle') {
+    return {
+      counter: state.counter,
+      showCounter: !state.showCounter,
     };
   }
 
