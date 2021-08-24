@@ -4,7 +4,7 @@ import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import Notification from './components/UI/Notification';
-import { sendCartData } from './store/cart-slice';
+import { sendCartData } from './store/cart-actions';
 import { uiActions } from './store/ui-slice';
 
 // this will be initialized only once. Doesn't get reinitialized on 'App' component reevaluation
