@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import MainHeader from './components/MainHeader';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
@@ -27,6 +27,10 @@ function App() {
           By default (without <Switch>), the routes are not parsed such that only one of them is loaded at the same time.
           But instead all routes that match (not exact match) the current path will be loaded.
         */}
+          <Route path='/' exact>
+            {/* Redirect the user to some other page */}
+            <Redirect to='/welcome' />
+          </Route>
           <Route path='/welcome'>
             <Welcome />
           </Route>
