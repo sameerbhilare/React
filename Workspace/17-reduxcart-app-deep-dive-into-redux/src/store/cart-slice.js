@@ -8,6 +8,7 @@ const initialCartState = {
 const cartSlice = createSlice({
   name: 'cart',
   initialState: initialCartState,
+  // reducers must be pure,side effect free synchronous code functions
   reducers: {
     addItem(state, action) {
       const newItem = action.payload;
@@ -44,6 +45,11 @@ const cartSlice = createSlice({
         existingItem.quantity--;
         existingItem.totalPrice = existingItem.totalPrice - existingItem.price;
       }
+    },
+
+    replaceCart(state, action) {
+      state.totalQuantity = action.payload.totalQuantity;
+      state.items = action.payload.items;
     },
   },
 });
