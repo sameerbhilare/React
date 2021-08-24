@@ -4,6 +4,7 @@ import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import Notification from './components/UI/Notification';
+import { sendCartData } from './store/cart-slice';
 import { uiActions } from './store/ui-slice';
 
 // this will be initialized only once. Doesn't get reinitialized on 'App' component reevaluation
@@ -17,6 +18,7 @@ function App() {
   const notification = useSelector((state) => state.ui.notification);
 
   /*
+    APPROACH 1: HANDLING ASYNC TASKS INSIDE THE COMPONENT
     Listen to all state changes and if something changes sync it with backend.
     
     useEffect to watch for changes in the cart state and sync it with backend.
@@ -27,6 +29,7 @@ function App() {
     Have side effect logic in a component and keep all our data transformation logic inside of a Reducer.
     "Lean Component & Fat Reducers"
   */
+  /*
   useEffect(() => {
     const sendCartData = async () => {
       dispatch(
@@ -76,6 +79,38 @@ function App() {
       );
     });
   }, [cart, dispatch]); // adding 'dispatch' to get rid of the IDE warnings, though dispatch function will never change
+  */
+
+  /*
+    APPROACH 2: HANDLING ASYNC TASKS INSIDE ACTION CREATORS.
+
+    Thunk - A function that delays an action until later.
+    An action creator function that does NOT return the action itself 
+    but another function which eventually returns the action.
+  */
+  useEffect(() => {
+    // we should not send cart data as soon as page loads.
+    if (isInitial) {
+      isInitial = false;
+      return;
+    }
+
+    /*
+    The great thing about Redux when using Redux toolkit is that
+    It does not just accept action objects with a type property. 
+    But it also does accept, action creators that return functions.
+
+    And if Redux sees, that you're dispatching a action which is actually a function instead of action object,
+    it will execute that function (the function which is returned by sendCartData() in cart-slice.js) for you. 
+
+    So that in that executed function (the function which is returned by sendCartData() in cart-slice.js),
+    we can dispatch other actions again.
+    Because there's a such a common pattern that we wanna have action creators that can perform side effects.
+    And that can then dispatch other actions, which eventually reaches the reducers as part of a flow of side-effects,
+    or as a flow of steps that should be taken.
+    */
+    dispatch(sendCartData(cart));
+  }, [cart, dispatch]);
 
   return (
     <>
