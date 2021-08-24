@@ -4,7 +4,7 @@ import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import Notification from './components/UI/Notification';
-import { sendCartData } from './store/cart-actions';
+import { fetchCartData, sendCartData } from './store/cart-actions';
 import { uiActions } from './store/ui-slice';
 
 // this will be initialized only once. Doesn't get reinitialized on 'App' component reevaluation
@@ -109,8 +109,15 @@ function App() {
     And that can then dispatch other actions, which eventually reaches the reducers as part of a flow of side-effects,
     or as a flow of steps that should be taken.
     */
-    dispatch(sendCartData(cart));
-  }, [cart, dispatch]);
+    if (cart.changed) {
+      dispatch(sendCartData(cart));
+    }
+  }, [cart, dispatch]); // adding 'dispatch' to get rid of the IDE warnings, though dispatch function will never change
+
+  // APPROACH 2: HANDLING ASYNC TASKS INSIDE ACTION CREATORS.
+  useEffect(() => {
+    dispatch(fetchCartData());
+  }, [dispatch]); // adding 'dispatch' to get rid of the IDE warnings, though dispatch function will never change
 
   return (
     <>
