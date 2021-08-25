@@ -1,11 +1,10 @@
+import { useEffect } from 'react';
 import { Link, Route, useParams, useRouteMatch } from 'react-router-dom';
 import Comments from '../components/comments/Comments';
 import HighlightedQuote from '../components/quotes/HighlightedQuote';
-
-const DUMMY_QUOTES = [
-  { id: 'q1', author: 'Max', text: 'Learning React is fun!' },
-  { id: 'q2', author: 'Maximilian', text: 'Learning React is great!' },
-];
+import LoadingSpinner from '../components/UI/LoadingSpinner';
+import useHttp from '../hooks/use-http';
+import { getSingleQuote } from '../lib/api';
 
 const QuoteDetail = () => {
   /*
@@ -15,17 +14,34 @@ const QuoteDetail = () => {
    */
   const match = useRouteMatch();
   const params = useParams();
+  const { quoteId } = params;
 
-  const quote = DUMMY_QUOTES.find((quote) => quote.id === params.quoteId);
+  const { sendRequest, status, data: loadedQuote, error } = useHttp(getSingleQuote, true);
 
-  if (!quote) {
+  useEffect(() => {
+    sendRequest(quoteId);
+  }, [sendRequest, quoteId]);
+
+  if (status === 'pending') {
+    return (
+      <div className='centered'>
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <p className='centered focused'>{error}</p>;
+  }
+
+  if (!loadedQuote.text) {
     // if quote not found
     return <p>No quote found!</p>;
   }
 
   return (
     <>
-      <HighlightedQuote text={quote.text} author={quote.author} />
+      <HighlightedQuote text={loadedQuote.text} author={loadedQuote.author} />
       {/* Using react router to conditionally render content based on which path you are on */}
       <Route path={match.value} exact>
         <div className='centered'>
