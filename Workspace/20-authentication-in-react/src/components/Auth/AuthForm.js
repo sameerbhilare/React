@@ -60,9 +60,10 @@ const AuthForm = () => {
         }
       })
       .then((data) => {
+        // data.expiresIn is in seconds. we need to convert it to date/time when it will be expired
         const expirationTime = new Date(new Date().getTime() + +data.expiresIn * 1000);
         authCtx.login(data.idToken, expirationTime.toISOString());
-        history.replace('/');
+        history.replace('/'); // avoid going back to prev page
       })
       .catch((err) => {
         alert(err.message);

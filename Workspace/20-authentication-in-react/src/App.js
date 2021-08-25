@@ -16,6 +16,8 @@ function App() {
         <Route path='/' exact>
           <HomePage />
         </Route>
+        {/* Protecting cetain routes by dynamically changing the Routes configuration 
+        based on user login status */}
         {!authCtx.isLoggedIn && (
           <Route path='/auth'>
             <AuthPage />

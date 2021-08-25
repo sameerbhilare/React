@@ -30,7 +30,7 @@ const ProfileForm = () => {
     }).then((res) => {
       // assumption: Always succeeds!
 
-      history.replace('/');
+      history.replace('/'); // avoid going back to prev page
     });
   };
 
