@@ -64,7 +64,7 @@ const HomePage = (props) => {
     In getStaticProps, you can also execute any code that would normally only run on a server.
     You could access a file system here or securely connect to a database 
     because any code you write in here will never end up on the client side and it will never execute on the client side 
-    simply because this code is executed during the build process, 
+    simply because this code is executed during the "build process", 
     not on the server and especially not on the clients of your visitors.
 
     getStaticProps => data fetching for pre-rendering
