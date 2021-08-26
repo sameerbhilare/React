@@ -2,6 +2,7 @@
 // the name 'index.js' is a special name.
 // keep page components as lean as possible.
 
+import { MongoClient, ObjectId } from 'mongodb'; // will not be part of client bundle
 import MeetupDetail from '../../components/meetups/MeetupDetail';
 
 const MeetupDetailsPage = (props) => {
@@ -32,6 +33,36 @@ const MeetupDetailsPage = (props) => {
   And then again, 'getStaticProps' executes for every page.
 */
 export async function getStaticPaths() {
+  /* 
+    Here we could call fetch api to call our API routes
+    e.g. fetch('/api/meetups');
+
+    However this code in the 'getStaticProps' runs during "build time" and not exposed to client,
+    we can directly get data using some helper function here.
+    This will avoid sending unnecessary request to our own endpoint
+
+    IMPORTANT -
+    When you import something in a 'page' component file and that something is 
+    then only used in getServerSideProps or getStaticProps, 
+    then the imported package will NOT be part of the client side bundle. 
+    So your credentials will NOT be exposed client/browser.
+
+    So you can import both server side and clients side code here, and depending on where you use it,
+    it will be included in different bundles which are independent from each other.
+    That's a nice, smart feature built into nextJS.
+  */
+  // connect to mongodb
+  const client = await MongoClient.connect('mongodb://localhost:27017/meetups-db');
+  const db = client.db();
+
+  // select collection in which you want to insert document
+  const meetupCollections = db.collection('meetups');
+  // fetch all documents but only _id field
+  const meetups = await meetupCollections.find({}, { _id: 1 }).toArray();
+  console.log(meetups);
+  // close connection
+  client.close();
+
   return {
     /*
       fallback key tells NextJS whether your 'paths' array contains all supported parameter values or just some of them.
@@ -47,6 +78,8 @@ export async function getStaticPaths() {
     fallback: false,
 
     // array of objects. In realiyy this will be fetched from DB and this array is then generated
+    paths: meetups.map((meetup) => ({ params: { meetupId: meetup._id.toString() } })),
+    /*
     paths: [
       // one object per version of this dynamic page.
       {
@@ -62,7 +95,7 @@ export async function getStaticPaths() {
           meetupId: 'm2',
         },
       },
-    ],
+    ], */
   };
 }
 
@@ -75,15 +108,26 @@ export async function getStaticProps(context) {
   const meetupId = context.params.meetupId;
   console.log(meetupId); // you will see this log in terminal at the time of "build process" of this prj.
 
+  // connect to mongodb
+  const client = await MongoClient.connect('mongodb://localhost:27017/meetups-db');
+  const db = client.db();
+
+  // select collection in which you want to insert document
+  const meetupCollections = db.collection('meetups');
+  // fetch all documents but only _id field
+  const meetup = await meetupCollections.findOne({ _id: ObjectId(meetupId) });
+  console.log(meetup);
+  // close connection
+  client.close();
+
   return {
     props: {
       meetupData: {
-        id: meetupId,
-        image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/1280px-Stadtbild_M%C3%BCnchen.jpg',
-        title: 'Our First Meetup',
-        address: 'Some street 5, City',
-        description: 'A meetup description',
+        id: meetup._id.toString(),
+        image: meetup.image,
+        title: meetup.title,
+        address: meetup.address,
+        description: meetup.description,
       },
     },
   };
