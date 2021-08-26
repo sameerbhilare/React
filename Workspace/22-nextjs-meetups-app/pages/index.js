@@ -68,6 +68,10 @@ const HomePage = (props) => {
     not on the server and especially not on the clients of your visitors.
 
     getStaticProps => data fetching for pre-rendering
+
+    PROBLEM WITH getStaticProps - 
+    1. Data could be outdated as it is generated at build-time.
+    Solution is to use a property called 'revalidate'
 */
 export async function getStaticProps() {
   // fetch data from an API or file system, etc.
@@ -79,6 +83,22 @@ export async function getStaticProps() {
     props: {
       meetups: DUMMY_MEETUPS,
     },
+    /*
+    IMPORTANT - 
+    When we add 'revalidate' property to the object returned by getStaticProps, 
+    we unlock a feature called "incremental Static Generation".
+    Revalidate wants a number e.g. 10 which represents the number of seconds NextJS will wait
+    until it regenerates this page for an incoming request.
+
+    That means that page will not only just be generated during the build process 
+    but it will also be generated at least every mentioned number of seconds(e.g. 10) on the server, 
+    if there are requests for this page.
+    And then these regenerated pages would replace the old pre-generated pages.
+
+    With that, you would ensure that your data is never older than mentioned number if seconds e.g. 10 secs.
+    And therefore, the number of seconds you wanna use here depends on your data update frequency.
+    */
+    revalidate: 10,
   };
 }
 
