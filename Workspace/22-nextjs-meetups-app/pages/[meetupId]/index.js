@@ -78,14 +78,21 @@ export async function getStaticPaths() {
       fallback key tells NextJS whether your 'paths' array contains all supported parameter values or just some of them.
       'false' means 'paths' arr contains all supported params 
       and if the user enters anything that's not supported here e.g. m3, he would see a 404 error.
-      'true' means NextJS would try to generate a page for meetup ID 
-      dynamically on the server for the incoming request.
+      'true' / 'blocking' means NextJS will then generate that page on demand, and thereafter cache it,
+      so it will pre-generate it when needed.
+
+      With 'true', it would immediately return an empty page, 
+      and then pull down the dynamically generated content once that's done. 
+      So you need to handle that case that the page does not have the data yet.
+
+      With 'blocking', the user will not see anything until the page was pre-generated,
+      and the finished page will be served.
 
       Fall back is a nice feature because it allows you to pre-generate some of your pages for specific meetup ID values.
       For example the pages which are visited most frequently 
       and then pre-generate the missing ones dynamically when requests for them are coming in.
     */
-    fallback: false,
+    fallback: 'blocking', // true = 'blocking'
 
     // array of objects. In realiyy this will be fetched from DB and this array is then generated
     paths: meetups.map((meetup) => ({ params: { meetupId: meetup._id.toString() } })),
