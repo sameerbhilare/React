@@ -69,7 +69,8 @@ export async function getStaticPaths() {
   const meetupCollections = db.collection('meetups');
   // fetch all documents but only _id field
   const meetups = await meetupCollections.find({}, { _id: 1 }).toArray();
-  console.log(meetups);
+  // console.log(meetups);
+  console.log('[meetupId] getStaticPaths meetups count => ' + meetups.length);
   // close connection
   client.close();
 
@@ -92,7 +93,7 @@ export async function getStaticPaths() {
       For example the pages which are visited most frequently 
       and then pre-generate the missing ones dynamically when requests for them are coming in.
     */
-    fallback: 'blocking', // true = 'blocking'
+    fallback: true, // true = 'blocking'
 
     // array of objects. In realiyy this will be fetched from DB and this array is then generated
     paths: meetups.map((meetup) => ({ params: { meetupId: meetup._id.toString() } })),
@@ -123,7 +124,7 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
   // fetch data for single meetup
   const meetupId = context.params.meetupId;
-  console.log(meetupId); // you will see this log in terminal at the time of "build process" of this prj.
+  console.log('[meetupId] getStaticProps meetupId => ', meetupId); // you will see this log in terminal at the time of "build process" of this prj.
 
   // connect to mongodb
   const client = await MongoClient.connect('mongodb://localhost:27017/meetups-db');
@@ -133,7 +134,7 @@ export async function getStaticProps(context) {
   const meetupCollections = db.collection('meetups');
   // fetch all documents but only _id field
   const meetup = await meetupCollections.findOne({ _id: ObjectId(meetupId) });
-  console.log(meetup);
+  console.log('[meetupId] getStaticProps meetup => ', meetup);
   // close connection
   client.close();
 

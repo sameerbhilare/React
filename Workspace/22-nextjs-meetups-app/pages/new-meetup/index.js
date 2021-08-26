@@ -9,7 +9,7 @@ const NewMeetupPage = () => {
   const router = useRouter();
 
   const addMeetupHandler = async (enteredMeetupData) => {
-    console.log(enteredMeetupData);
+    //console.log(enteredMeetupData);
 
     // send request to API route which will be internal path as both frontend and backend are on same server
     const response = await fetch('/api/new-meetup', {
