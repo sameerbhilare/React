@@ -93,7 +93,7 @@ export async function getStaticPaths() {
       For example the pages which are visited most frequently 
       and then pre-generate the missing ones dynamically when requests for them are coming in.
     */
-    fallback: true, // true = 'blocking'
+    fallback: 'blocking', // true = 'blocking'
 
     // array of objects. In realiyy this will be fetched from DB and this array is then generated
     paths: meetups.map((meetup) => ({ params: { meetupId: meetup._id.toString() } })),
