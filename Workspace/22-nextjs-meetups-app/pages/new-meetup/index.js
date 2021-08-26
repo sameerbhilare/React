@@ -1,6 +1,7 @@
 // This file will be served when request reaches ourdomain.com/new-meetup
 // the name 'index.js' is a special name.
 
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import NewMeetupForm from '../../components/meetups/NewMeetupForm';
 
@@ -24,7 +25,21 @@ const NewMeetupPage = () => {
     router.push('/');
   };
 
-  return <NewMeetupForm onAddMeetup={addMeetupHandler} />;
+  return (
+    <>
+      {/* 'Head' component from next/head allows you to add Head elements to the Head section of your page.
+      All the HTML elements which you can add in the Head section, you can add them between <Head></Head>. */}
+      <Head>
+        <title>Add a New Meetup</title>
+        {/* this text for 'description' will be shown by search engines */}
+        <meta
+          name='description'
+          content='Add your own meetups and create networking opportunities!'
+        />
+      </Head>
+      <NewMeetupForm onAddMeetup={addMeetupHandler} />
+    </>
+  );
 };
 
 export default NewMeetupPage;

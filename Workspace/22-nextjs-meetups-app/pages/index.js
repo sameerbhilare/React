@@ -1,6 +1,7 @@
 // This file will be served when request reaches ourdomain.com/
 // the name 'index.js' is a special name.
 
+import Head from 'next/head';
 import MeetupList from '../components/meetups/MeetupList';
 
 /*
@@ -15,24 +16,24 @@ import MeetupList from '../components/meetups/MeetupList';
 */
 import { MongoClient } from 'mongodb';
 
-const DUMMY_MEETUPS = [
-  {
-    id: 'm1',
-    title: 'A First Meetup',
-    image:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/1280px-Stadtbild_M%C3%BCnchen.jpg',
-    address: 'Some address 5, 12345 Some City',
-    description: 'This is a first meetup!',
-  },
-  {
-    id: 'm2',
-    title: 'A Second Meetup',
-    image:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/1280px-Stadtbild_M%C3%BCnchen.jpg',
-    address: 'Some address 10, 12345 Some City',
-    description: 'This is a second meetup!',
-  },
-];
+// const DUMMY_MEETUPS = [
+//   {
+//     id: 'm1',
+//     title: 'A First Meetup',
+//     image:
+//       'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/1280px-Stadtbild_M%C3%BCnchen.jpg',
+//     address: 'Some address 5, 12345 Some City',
+//     description: 'This is a first meetup!',
+//   },
+//   {
+//     id: 'm2',
+//     title: 'A Second Meetup',
+//     image:
+//       'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/1280px-Stadtbild_M%C3%BCnchen.jpg',
+//     address: 'Some address 10, 12345 Some City',
+//     description: 'This is a second meetup!',
+//   },
+// ];
 
 const HomePage = (props) => {
   // const [loadedMeetups, setLoadedMeetups] = useState([]);
@@ -54,7 +55,18 @@ const HomePage = (props) => {
   }, []);
   */
 
-  return <MeetupList meetups={props.meetups || []} />;
+  return (
+    <>
+      {/* 'Head' component from next/head allows you to add Head elements to the Head section of your page.
+      All the HTML elements which you can add in the Head section, you can add them between <Head></Head>. */}
+      <Head>
+        <title>React Meetups</title>
+        {/* this text for 'description' will be shown by search engines */}
+        <meta name='description' content='Browse a huge list of highly active React meetups!' />
+      </Head>
+      <MeetupList meetups={props.meetups || []} />
+    </>
+  );
 };
 
 /*

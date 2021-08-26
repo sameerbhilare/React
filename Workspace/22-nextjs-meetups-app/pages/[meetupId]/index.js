@@ -3,16 +3,26 @@
 // keep page components as lean as possible.
 
 import { MongoClient, ObjectId } from 'mongodb'; // will not be part of client bundle
+import Head from 'next/head';
 import MeetupDetail from '../../components/meetups/MeetupDetail';
 
 const MeetupDetailsPage = (props) => {
   return (
-    <MeetupDetail
-      image={props.meetupData.image}
-      title={props.meetupData.title}
-      address={props.meetupData.address}
-      description={props.meetupData.description}
-    />
+    <>
+      {/* 'Head' component from next/head allows you to add Head elements to the Head section of your page.
+      All the HTML elements which you can add in the Head section, you can add them between <Head></Head>. */}
+      <Head>
+        <title>{props.meetupData.title}</title>
+        {/* this text for 'description' will be shown by search engines */}
+        <meta name='description' content={props.meetupData.description} />
+      </Head>
+      <MeetupDetail
+        image={props.meetupData.image}
+        title={props.meetupData.title}
+        address={props.meetupData.address}
+        description={props.meetupData.description}
+      />
+    </>
   );
 };
 
