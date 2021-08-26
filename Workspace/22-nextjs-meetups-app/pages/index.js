@@ -84,14 +84,14 @@ export async function getStaticProps() {
       meetups: DUMMY_MEETUPS,
     },
     /*
-    IMPORTANT - 
-    When we add 'revalidate' property to the object returned by getStaticProps, 
+    IMPORTANT -
+    When we add 'revalidate' property to the object returned by getStaticProps,
     we unlock a feature called "incremental Static Generation".
     Revalidate wants a number e.g. 10 which represents the number of seconds NextJS will wait
     until it regenerates this page for an incoming request.
 
-    That means that page will not only just be generated during the build process 
-    but it will also be generated at least every mentioned number of seconds(e.g. 10) on the server, 
+    That means that page will not only just be generated during the build process
+    but it will also be generated at least every mentioned number of seconds(e.g. 10) on the server,
     if there are requests for this page.
     And then these regenerated pages would replace the old pre-generated pages.
 
@@ -101,5 +101,46 @@ export async function getStaticProps() {
     revalidate: 10,
   };
 }
+
+/*
+  But sometimes even a regular update via 'getStaticProps' is not enough.
+  Sometimes you really want to regenerate this page for every incoming request.
+  So you want to pre-generate the page dynamically on the fly after deployment on the server,
+  not during the build process and not every couple of seconds, but for every request.
+  In this case, we should go for special function called 'getServerSideProps()'
+
+  The difference to getStaticProps is that this function will now not run during the build process,
+  but instead always on the server after deployment.
+
+  Both 'getStaticProps' and 'getServerSideProps' receive an input called 'context'.
+  With 'context', you get access to request and response objects via 'context.req' & 'context.res' resp.
+
+  Possible disadvantage with 'getServerSideProps' is that 
+  it means that you need to wait for your page to be generated on every incoming request.
+
+  RECOMMENDATION - 
+  If you don't have data that changes all the time, so data that changes multiple times every second.
+  And if you don't need access to the request object, let's say for authentication, then
+  'getStaticProps' is actually better.
+
+  Because with 'getStaticProps', you pre-generate an HTML file, 
+  that file can then be stored and served by a CDN. And that simply is faster than regenerating
+  and fetching that data for every incoming request. 
+  So your page will be faster when working with getStaticProps, 
+  because then it can be cached and reused, instead of regenerated all the time.
+*/
+/*
+export async function getServerSideProps(context) {
+  const req = context.req;
+  const res = context.res;
+  //in the end, must return an object
+  return {
+    // 'props' must be part of returned object
+    // as it will passed to the props property of this component function (HomePage)
+    props: {
+      meetups: DUMMY_MEETUPS,
+    },
+  };
+}*/
 
 export default HomePage;
