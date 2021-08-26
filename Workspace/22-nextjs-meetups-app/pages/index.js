@@ -95,7 +95,18 @@ export async function getStaticProps(context) {
     However this code in the 'getStaticProps' runs during "build time" and not exposed to client,
     we can directly get data using some helper function here.
     This will avoid sending unnecessary request to our own endpoint
+
+    IMPORTANT -
+    When you import something in a 'page' component file and that something is 
+    then only used in getServerSideProps or getStaticProps, 
+    then the imported package will NOT be part of the client side bundle. 
+    So your credentials will NOT be exposed client/browser.
+
+    So you can import both server side and clients side code here, and depending on where you use it,
+    it will be included in different bundles which are independent from each other.
+    That's a nice, smart feature built into nextJS.
   */
+
   // connect to mongodb
   const client = await MongoClient.connect('mongodb://localhost:27017/meetups-db');
   const db = client.db();
