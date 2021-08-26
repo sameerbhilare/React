@@ -3,6 +3,18 @@
 
 import MeetupList from '../components/meetups/MeetupList';
 
+/*
+  IMPORTANT -
+  When you import something in a 'page' component file and that something is 
+  then only used in getServerSideProps or getStaticProps, 
+  then the imported package will NOT be part of the client side bundle.
+
+  So you can import both server side and clients side code here, and depending on where you use it,
+  it will be included in different bundles which are independent from each other.
+  That's a nice, smart feature built into nextJS.
+*/
+import { MongoClient } from 'mongodb';
+
 const DUMMY_MEETUPS = [
   {
     id: 'm1',
@@ -76,12 +88,39 @@ const HomePage = (props) => {
 export async function getStaticProps(context) {
   // fetch data from an API or file system, etc.
 
+  /* 
+    Here we could call fetch api to call our API routes
+    e.g. fetch('/api/meetups');
+
+    However this code in the 'getStaticProps' runs during "build time" and not exposed to client,
+    we can directly get data using some helper function here.
+    This will avoid sending unnecessary request to our own endpoint
+  */
+  // connect to mongodb
+  const client = await MongoClient.connect('mongodb://localhost:27017/meetups-db');
+  const db = client.db();
+
+  // select collection in which you want to insert document
+  const meetupCollections = db.collection('meetups');
+  // fetch all documents
+  const meetups = await meetupCollections.find().toArray();
+  console.log(meetups);
+  // close connection
+  client.close();
+
   // in the end, must return an object
   return {
     // 'props' must be part of returned object
     // as it will passed to the props property of this component function (HomePage)
     props: {
-      meetups: DUMMY_MEETUPS,
+      //meetups: DUMMY_MEETUPS,
+      meetups: meetups.map((meetup) => ({
+        id: meetup._id.toString(),
+        title: meetup.title,
+        image: meetup.image,
+        address: meetup.address,
+        description: meetup.description,
+      })),
     },
     /*
     IMPORTANT -
