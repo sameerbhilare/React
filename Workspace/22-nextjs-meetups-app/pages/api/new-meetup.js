@@ -14,16 +14,32 @@
     so e.g. to "/api/new-meetup" for this file.
 */
 
+import { MongoClient } from 'mongodb';
+
 // we can name the handler function anything, we just need to export it as default export
 // this handler function receive req and res objects, automatically passed by Nextjs.
-const handler = (req, res) => {
+const handler = async (req, res) => {
   // POST /api/new-meetup
   if (req.method === 'POST') {
     const data = req.body;
 
-    const { title, image, address, description } = data;
+    // connect to mongodb
+    const client = await MongoClient.connect('mongodb://localhost:27017/meetups-db');
+    const db = client.db();
 
-    // store the data in DB
+    // select collection in which you want to insert document
+    const meetupCollections = db.collection('meetups');
+    // insert document in db
+    const result = await meetupCollections.insertOne(data);
+    console.log(result);
+
+    // close connection
+    client.close();
+
+    // send response to frontend
+    res.status(200).json({
+      message: 'Meetup Inserted!',
+    });
   }
 };
 
