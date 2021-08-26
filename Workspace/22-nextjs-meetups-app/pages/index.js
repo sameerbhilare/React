@@ -73,7 +73,7 @@ const HomePage = (props) => {
     1. Data could be outdated as it is generated at build-time.
     Solution is to use a property called 'revalidate'
 */
-export async function getStaticProps() {
+export async function getStaticProps(context) {
   // fetch data from an API or file system, etc.
 
   // in the end, must return an object
