@@ -5,6 +5,7 @@ import Todo from './models/todo';
 
 function App() {
 
+  // using generic to specify whattype of state we are managing
   const [todos, setTodos] = useState<Todo[]>([]);
 
   const addtodoHandler = (text: string) => {
