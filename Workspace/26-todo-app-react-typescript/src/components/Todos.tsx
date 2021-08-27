@@ -1,4 +1,5 @@
 import React from 'react';
+import Todo from '../models/todo';
 
 /*
   React.FC is from @types/react. React.FC is a generic type.
@@ -14,11 +15,11 @@ import React from 'react';
   Therefore using our components incorrectly, for example, not passing in all the props 
   that component needs is pretty much impossible because we get errors like this directly in the IDE now.
 */
-const Todos: React.FC<{ items: string[] }> = (props) => {
+const Todos: React.FC<{ items: Todo[] }> = (props) => {
   return (
     <ul>
       {props.items.map((item) => (
-        <li key={item}>{item}</li>
+        <li key={item.id}>{item.text}</li>
       ))}
     </ul>
   );
