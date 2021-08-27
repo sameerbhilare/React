@@ -1,6 +1,10 @@
 import { useRef } from "react";
 
-const NewTodo = () => {
+/*
+    onAddTodo property will be merged with React.FC properties.
+    onAddTodo is a function which accepts a string and does not return anything.
+*/
+const NewTodo: React.FC<{onAddTodo: (text: string) => void}> = (props) => {
 
     const todoTextInputRef = useRef<HTMLInputElement>(null);
 
@@ -16,6 +20,8 @@ const NewTodo = () => {
             // throw an error
             return;
         }
+
+        props.onAddTodo(enteredText);
     }
 
     return <form onSubmit={submitHandler}>
