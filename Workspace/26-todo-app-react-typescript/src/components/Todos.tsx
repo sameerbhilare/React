@@ -1,7 +1,9 @@
 import React from 'react';
+import { useContext } from 'react';
 import Todo from '../models/todo';
 import TodoItem from './TodoItem';
 import classes from './Todos.module.css';
+import { TodosContext } from '../store/todos-context';
 
 /*
   React.FC is from @types/react. React.FC is a generic type.
@@ -17,19 +19,33 @@ import classes from './Todos.module.css';
   Therefore using our components incorrectly, for example, not passing in all the props 
   that component needs is pretty much impossible because we get errors like this directly in the IDE now.
 */
+const Todos: React.FC = () => {
 
-/*
-  This FC receives 'items' and 'onRemoveTodo'.
-*/
-const Todos: React.FC<{ items: Todo[], onRemoveTodo: (todoId:string) => void }> = (props) => {
+  const todosCtx = useContext(TodosContext);
+
   return (
     <ul className={classes.todos}>
-      {props.items.map((item) => (
+      {todosCtx.items.map((item) => (
         // bind allows us to preconfigure a function for future execution
-        <TodoItem key={item.id} text={item.text} onRemoveTodo={props.onRemoveTodo.bind(null,item.id)}/>
+        <TodoItem key={item.id} text={item.text} onRemoveTodo={todosCtx.removeTodo.bind(null,item.id)}/>
       ))}
     </ul>
   );
 };
+
+// =============== without context api ===========
+/*
+  This FC receives 'items' and 'onRemoveTodo'.
+*/
+// const Todos: React.FC<{ items: Todo[], onRemoveTodo: (todoId:string) => void }> = (props) => {
+//   return (
+//     <ul className={classes.todos}>
+//       {props.items.map((item) => (
+//         // bind allows us to preconfigure a function for future execution
+//         <TodoItem key={item.id} text={item.text} onRemoveTodo={props.onRemoveTodo.bind(null,item.id)}/>
+//       ))}
+//     </ul>
+//   );
+// };
 
 export default Todos;
