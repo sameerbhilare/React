@@ -8,7 +8,7 @@ function App() {
   // using generic to specify whattype of state we are managing
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  const addtodoHandler = (text: string) => {
+  const addTodoHandler = (text: string) => {
     const newTodo = new Todo(text);
     setTodos(prevTodos => {
       return prevTodos.concat(newTodo);
@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div>
-      <NewTodo onAddTodo={addtodoHandler}/>
+      <NewTodo onAddTodo={addTodoHandler}/>
       <Todos items={todos} onRemoveTodo={removeTodoHandler}/>
     </div>
   );
