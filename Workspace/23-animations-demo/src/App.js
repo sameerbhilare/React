@@ -33,7 +33,21 @@ class App extends Component {
 
         <br />
 
-        <Transition in={this.state.showBlock} timeout={1000} mountOnEnter unmountOnExit>
+        <Transition
+          in={this.state.showBlock}
+          timeout={1000}
+          mountOnEnter
+          unmountOnExit
+          // transition events/callbacks
+          // This can be nice to create staggered animations
+          // where you want to wait for one animation to finish before you start the next one.
+          onEnter={() => console.log('onEnter')}
+          onEntering={() => console.log('onEntering')}
+          onEntered={() => console.log('onEntered')}
+          onExit={() => console.log('onExit')}
+          onExiting={() => console.log('onExiting')}
+          onExited={() => console.log('onExited')}
+        >
           {/* {(state) => <p>{state}</p>} */}
           {(state) => (
             <div
